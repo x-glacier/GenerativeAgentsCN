@@ -1,0 +1,20 @@
+以下是对 ${agent} 的简要描述：
+${base_desc}
+
+以下是 ${agent} 的记忆：
+${memory}
+
+当前位置：${address}
+当前时间：${current_time}
+
+${previous_context}${current_context}
+${agent} 开始和 ${another} 对话。以下是他们的对话记录：
+"""
+${conversation}
+"""
+
+基于以上内容，现在 ${agent} 会对 ${another} 说什么？
+直接输出以下格式的json，不要补充其他信息：
+{
+    "${agent}": <${agent}说的话>
+}

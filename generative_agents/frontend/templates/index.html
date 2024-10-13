@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="game-container" style="text-align: center"></div>
+<div>
+    <div class="row">
+        <div class="col-md-12" style="border: solid; padding: 1em; padding-left:2em; padding-right:2em; border-radius: 5px;">
+            <div class="row" style="display: flex; flex-wrap: wrap; margin: -0.5em;">
+                {% for p in persona_names %}
+                <div style="text-align: center; margin: 0.5em;">
+                    <a href="javascript:void(0);" id="on_screen_det_trigger-{{ p }}">
+                        <div style="padding: 0;">
+                            {% set image_static = 'assets/village/agents/' ~ p ~ '/portrait.png' %}
+                            <img src="{{ url_for('static', filename=image_static) }}" style="width: 32px; padding: 0;">
+                            <br>
+                            {{ p }}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="media" id="on_screen_det_content-init" style="background-color:#EEEEEE; padding:1em; padding-left:2em; padding-right:2em; border-radius:5px; ">
+        <em>点击角色可查看更多细节。</em>
+    </div>
+
+    {% for p in persona_names %}
+        <div class="media" id="on_screen_det_content-{{ p }}" style="background-color:#EEEEEE; padding:0em; padding-left:2em; padding-right:2em; border-radius:5px; display: none;">
+            <div class="media-left media-middle">
+                {% set image_static = 'assets/village/agents/' ~ p ~ '/portrait.png' %}
+                <img src="{{ url_for('static', filename=image_static) }}" style="width:3em">
+                <div style="display: none;" id="temp_focus"></div>
+            </div>
+            <div class="media-body" style='padding-left:3em; padding-top:1em; padding-bottom:0em'>
+                <div style="">
+                    <p style="font-size:1.0em"><span id="agent_desc__{{ p }}"></span></p>
+                    <p style="font-size:1.0em">当前活动：<span id="current_action__{{ p }}"></span> @ <span id="target_address__{{ p }}"></span></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
+
+{% block js_content %}
+<script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
+{% include 'main_script.html' %}
+<script>
+{% for p in persona_names %}
+    $('#on_screen_det_trigger-{{ p }}').click(function() {
+        $('#on_screen_det_content-init').css({
+          'display': 'none',
+        });
+        {% for p_i in persona_names %}
+            $('#on_screen_det_content-{{p_i}}').css({
+                'display': 'none',
+            });
+            $('#on_screen_det_trigger-{{p_i}}').css({
+                'font-weight': '500',
+            });
+            $('#on_screen_det_trigger_container-{{p_i}}').css({
+                'background-color': 'white',
+                'border-radius': '10px'
+            });
+        {% endfor %}
+
+        $('#on_screen_det_trigger-{{ p }}').css({
+            'font-weight': '900',
+        });
+        $('#on_screen_det_trigger_container-{{ p }}').css({
+            'background-color': '#ABFF84',
+            'border-radius': '10px'
+        });
+        $('#on_screen_det_content-{{ p }}').css({
+            'display': 'block',
+        });
+
+        document.getElementById("temp_focus").innerHTML = "{{ p }}";
+    });
+{% endfor %}
+</script>
+{% endblock js_content %}

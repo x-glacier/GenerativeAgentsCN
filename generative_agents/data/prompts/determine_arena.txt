@@ -1,0 +1,14 @@
+在区域选项中，为当前任务选择一个合适的区域。
+
+${agent} 正去往 <${target_sector}>，里面有 ${target_arenas}。
+${daily_plan}
+问题：
+${agent} 正在 ${complete_plan}。为了 ${decomposed_plan}，${agent} 应该去 ${target_sector} 里面的哪个区域？
+
+要求：
+1. 必须在这个列表中选择一个区域，列表：[${target_arenas}]。
+2. 如果现在正位于列表中的区域，并且计划的活动可以在这里进行，最好留在当前区域。
+3. 不要选择列表以外的区域。
+4. 直接输出选中的结果。
+
+${agent} 应该去：

@@ -1,0 +1,12 @@
+${agent} 在 ${time} 的状态：
+${currently}
+
+${agent} 在 ${time} 结束时记得这些事情：
+${plan}
+
+${agent} 在 ${time} 结束时的想法和感受：
+${thought}
+
+现在是 ${current_time}。根据上述情况，以第三人称，用一句话描述 ${agent} 在 ${current_time} 的状态，以反映 ${agent} 在 ${time} 结束时的想法和感受。
+
+输出格式：状态: <新状态>

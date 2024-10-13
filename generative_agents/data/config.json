@@ -1,0 +1,41 @@
+{
+    "agent": {
+        "percept": {
+            "mode": "box",
+            "vision_r": 8,
+            "att_bandwidth": 8
+        },
+        "schedule": {
+            "max_try": 5,
+            "diversity": 5
+        },
+        "think": {
+            "mode": "llm",
+            "llm": {
+                "base_url": "http://127.0.0.1:11434/v1",
+                "model": "qwen2.5:7b-instruct-q4_K_M",
+                "embedding_model": "bge-m3:latest"
+            },
+            "interval": 1000,
+            "poignancy_max": 150
+        },
+        "chat_iter": 4,
+        "associate": {
+            "embedding": {
+                "type": "ollama",
+                "base_url": "http://127.0.0.1:11434",
+                "model": "bge-m3:latest"
+            },
+            "retention": 8
+        }
+    },
+    "api_keys": {
+        "OPENAI_API_KEY": "",
+        "QIANFAN_AK": "",
+        "QIANFAN_SK": "",
+        "SPARK_APPID": "",
+        "SPARK_API_SECRET": "",
+        "SPARK_API_KEY": "",
+        "ZHIPUAI_API_KEY": ""
+    }
+}

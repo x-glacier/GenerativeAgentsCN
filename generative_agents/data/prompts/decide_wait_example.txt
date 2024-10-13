@@ -1,0 +1,11 @@
+背景：
+"""
+${context}
+现在是 ${date}
+${status}
+${agent} 看到 ${another_status}
+"""
+问题：一步一步思考，在以下两个选项中，${agent} 应该怎么做？
+选项A：等待 ${another} 完成 ${another_action}，然后再 ${action}
+选项B：现在继续 ${action}
+${reason}${answer}
