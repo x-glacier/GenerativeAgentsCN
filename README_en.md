@@ -4,19 +4,20 @@
 
 ## 1. Configure the environment
 
-Pull the source code:
+### 1.1 pull the source code:
 
 ```
 git clone https://github.com/x-glacier/GenerativeAgentsCN.git
+cd GenerativeAgentsCN
 ```
 
-### 1.1 configure the large language model
+### 1.2 configure the large language model
 
 Modify the configuration file `generative_agents/data/config.json`:
 1. By default, [Ollama](https://ollama.com/) is used to load local quantization models and OpenAI compatible APIs are provided. We need to first pull the quantization model and ensure that `base_url` and `model` are consistent with the actual configuration of Ollama.
 2. If you want to call other APIs, fill in the relevant keys in `api_keys` and modify `base_url` and `model` to the correct values.
 
-### 1.2 install python dependencies
+### 1.3 install python dependencies
 
 Use a virtual environment, e.g. with anaconda3:
 
@@ -28,7 +29,6 @@ conda activate generative_agents_cn
 Install dependencies:
 
 ```
-cd GenerativeAgentsCN
 pip install -r requirements.txt
 ```
 
