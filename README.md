@@ -28,15 +28,31 @@ Generative Agents的原始代码工程化程度较低，难以持续维护或拓
 
 ## 1. 准备工作
 
+获取代码：
+
+```
+git clone https://github.com/x-glacier/GenerativeAgentsCN.git
+```
+
 ### 1.1 配置大语言模型（LLM）
 
 修改配置文件 `generative_agents/data/config.json`:
 1. 默认使用[Ollama](https://ollama.com/)加载本地量化模型，并提供OpenAI兼容API。需要先拉取量化模型（参考[ollama.md](docs/ollama.md)），并确保`base_url`和`model`与Ollama中的配置一致。
 2. 如果希望调用其他厂商的API，需要在`api_keys`中填入对应的key，并根据API文档修改`base_url`和`model`。
 
-### 1.2 安装python依赖包
+### 1.2 安装python依赖
+
+建议先使用anaconda3创建并激活虚拟环境：
 
 ```
+conda create -n generative_agents_cn python=3.11
+conda activate generative_agents_cn
+```
+
+安装依赖：
+
+```
+cd GenerativeAgentsCN
 pip install -r requirements.txt
 ```
 
@@ -83,7 +99,7 @@ python replay.py
 发布版本中内置了名为`example`的回放数据（由qwen2.5:32b-instruct-q4_K_M生成）。若希望以较快速度从头开始回放，画面缩放比例为0.6，则对应的url是：
 http://127.0.0.1:5000/?name=example&step=0&speed=2&zoom=0.6
 
-也可直接打开`simulation.md`查看所有人物活动和对话信息。文件位置：`results/compressed/example/simulation.md`。
+也可直接打开[simulation.md](generative_agents/results/compressed/example/simulation.md)，查看`example`中所有人物活动和对话信息。
 
 ### 3.3. 回放截图
 

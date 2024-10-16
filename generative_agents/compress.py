@@ -85,10 +85,10 @@ def generate_movement(checkpoints_folder, compressed_folder, compressed_file):
 
     result = {
         "start_datetime": "",  # 起始时间
-        "stride": stride,  # log中每个step对应的分钟数（必须与生成时的参数一致）
+        "stride": stride,  # 每个step对应的分钟数（必须与生成时的参数一致）
         "sec_per_step": sec_per_step,  # 回放时每一帧对应的秒数
-        "persona_init_pos": persona_init_pos,  # 每个agent的初始位置
-        "all_movement": all_movement,  # 所有agent在每个setp中的位置变化
+        "persona_init_pos": persona_init_pos,  # 每个Agent的初始位置
+        "all_movement": all_movement,  # 所有Agent在每个setp中的位置变化
     }
 
     last_location = dict()
@@ -190,6 +190,7 @@ def generate_movement(checkpoints_folder, compressed_folder, compressed_file):
     return result
 
 
+# 生成Markdown文档
 def generate_report(checkpoints_folder, compressed_folder, compressed_file):
     last_state = dict()
 

@@ -4,6 +4,12 @@
 
 ## 1. Configure the environment
 
+Pull the source code:
+
+```
+git clone https://github.com/x-glacier/GenerativeAgentsCN.git
+```
+
 ### 1.1 configure the large language model
 
 Modify the configuration file `generative_agents/data/config.json`:
@@ -12,7 +18,17 @@ Modify the configuration file `generative_agents/data/config.json`:
 
 ### 1.2 install python dependencies
 
+Use a virtual environment, e.g. with anaconda3:
+
 ```
+conda create -n generative_agents_cn python=3.11
+conda activate generative_agents_cn
+```
+
+Install dependencies:
+
+```
+cd GenerativeAgentsCN
 pip install -r requirements.txt
 ```
 
