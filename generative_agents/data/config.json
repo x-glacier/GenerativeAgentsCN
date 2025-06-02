@@ -13,7 +13,7 @@
             "mode": "llm",
             "llm": {
                 "base_url": "http://127.0.0.1:11434/v1",
-                "model": "qwen2.5:7b-instruct-q4_K_M",
+                "model": "qwen3:8b-q4_K_M",
                 "embedding_model": "bge-m3:latest"
             },
             "interval": 1000,
