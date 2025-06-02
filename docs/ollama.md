@@ -8,13 +8,13 @@
 
 在终端窗口输入命令，下载需要的模型。
 
-例如本项目默认使用的大语言模型是`qwen2.5-7b`，嵌入模型是`bge-m3`，可通过以下命令下载：
+例如本项目默认使用的大语言模型是`qwen3:8b-q4_K_M`，嵌入模型是`bge-m3`，可通过以下命令下载：
 ```
-ollama pull qwen2.5:7b-instruct-q4_K_M
+ollama pull qwen3:8b-q4_K_M
 ollama pull bge-m3:latest
 ```
 
-*注：MacOS系统m1/m2芯片，16G以上内存，建议使用qwen2.5-7b模型。Windows系统30/40系列N卡，12G以上显存，可使用qwen2.5-14b或更大的量化模型*
+*注：MacOS系统M芯片+16G以上内存，或Windows系统30/40系列N卡+12G以上显存，建议使用qwen3-8b模型。24G以上显存可使用更大的量化模型*
 
 # 运行
 
@@ -44,7 +44,7 @@ launchctl setenv OLLAMA_ORIGINS "*"
 
 *启动后默认监听端口：11434*
 
-# 常用设置
+# 其他常用设置
 
 ## 1. 解决外网访问的问题
 ```
@@ -57,14 +57,14 @@ OLLAMA_MODELS=E:\OllamaModels
 ```
 
 ## 3. 设置模型加载到内存中保留2小时
-*默认情况下，模型在卸载之前会在内存中保留 5 分钟*
+*默认情况下，模型在卸载之前会在内存中保留5分钟*
 ```
 OLLAMA_KEEP_ALIVE=2h
 ```
 
 ## 4. 修改默认端口
 ```
-OLLAMA_HOST=0.0.0.0:8000
+OLLAMA_HOST=0.0.0.0:11434
 ```
 
 ## 5. 设置多个用户并发请求

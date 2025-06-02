@@ -188,10 +188,15 @@ class OllamaLLMModel(LLMModel):
         return response["data"][0]["embedding"]
 
     def _completion(self, prompt, temperature=0.00001):
+        if "qwen3" in self._model and "\n/nothink" not in prompt:
+            # 针对Qwen3模型禁用think，提高推理速度
+            prompt += "\n/nothink"
         messages = [{"role": "user", "content": prompt}]
         response = self.ollama_chat(messages=messages, temperature=temperature, stream=False)
         if response and len(response["choices"]) > 0:
-            return response["choices"][0]["message"]["content"]
+            ret = response["choices"][0]["message"]["content"]
+            # 从输出结果中过滤掉<think>标签内的文字，以免影响后续逻辑
+            return re.sub(r"<think>.*</think>", "", ret, flags=re.DOTALL)
         return ""
 
     @classmethod

@@ -6,14 +6,18 @@
 
 25个智能体完全由ChatGPT驱动，自主组织派对、参加会议、在情人节筹办各种活动。他们能够展现出与人类相似的生活模式和行为习惯。
 
-Generative Agents的原始代码工程化程度较低，难以持续维护或拓展功能，且时隔一年多，中文LLM的能力也已胜任此类任务。因此，我们对原项目进行了重构+深度汉化，旨在为中文用户提供一个利于维护的基础版本，以便后续实验或尝试更多玩法。
+Generative Agents的原始代码工程化程度较低，难以持续维护或拓展功能，且时隔两年，中文LLM的能力早已胜任此类任务。因此，我们对原项目进行了重构+深度汉化，旨在为中文用户提供一个利于维护的基础版本，以便后续实验或尝试更多玩法。
 
 [wounderland](https://github.com/Archermmt/wounderland)项目是原[Generative Agents](https://github.com/joonspk-research/generative_agents)项目的重构版本，结构良好且代码质量远优于原版，因此本项目基于wounderland开发。
 
+更新：
+
+- 2025.06.02：增加对Qwen3和DeepSeek-R1等新模型的支持（处理输出结果中的<think>标签）。
+
 主要工作：
 
-- 重写全部提示语，将智能体的“母语”切换为中文，以便对接Qwen-2.5或GLM-4等中文模型；
-- 针对中文特点和Qwen2.5-7b/14b模型的能力，优化中文提示语及智能体之间的对话起止逻辑；
+- 重写全部提示语，将智能体的“母语”切换为中文，以便对接Qwen或GLM-4等中文模型；
+- 针对中文特点和Qwen2.5/3系列模型的能力，优化中文提示语及智能体之间的对话起止逻辑；
 - 所有提示语模板化，便于后期维护；
 - 修正原版的小问题（例如wounderland原版中智能体在入睡后便不再醒来）；
 - 增加对本地Ollama API的支持，同时将LlamaIndex embedding也接入Ollama，实现完全本地部署，降低实验成本。*Ollama安装及配置可参考[ollama.md](docs/ollama.md)*；
@@ -60,7 +64,7 @@ pip install -r requirements.txt
 
 ```
 cd generative_agents
-python start.py --name sim-test --start "20240213-09:30" --step 10 --stride 10
+python start.py --name sim-test --start "20250213-09:30" --step 10 --stride 10
 ```
 
 参数说明:
@@ -101,7 +105,7 @@ http://127.0.0.1:5000/?name=example&step=0&speed=2&zoom=0.6
 
 也可直接打开[simulation.md](generative_agents/results/compressed/example/simulation.md)，查看`example`中所有人物活动和对话信息。
 
-### 3.3. 回放截图
+### 3.3 回放截图
 
 *画面中对话内容由qwen2.5:14b-instruct-q4_K_M生成*
 
@@ -121,13 +125,21 @@ http://127.0.0.1:5000/?name=example&step=0&speed=2&zoom=0.6
 
 ![教室](docs/resources/snapshot4.gif)
 
-## 4. 参考资料
+## 4. 修改地图
 
-### 4.1 论文
+由于wounderland项目原作者没有提供maze.json的生成代码，所以想要创建新地图，有以下几种方案：
+
+1. 参考原始generative_agents项目中maze.py的逻辑，修改现有代码，以便兼容tield编辑器导出的json和csv数据文件；
+2. 参考现有的maze.json格式，编写代码用于合并tield编辑器导出的maze_meta_info.json、collision_maze.csv、sector_maze.csv等文件，为新地图生成maze.json。
+3. `jiejieje`已为本项目开发了一款地图标注工具，项目地址：https://github.com/jiejieje/tiled_to_maze.json
+
+## 5. 参考资料
+
+### 5.1 论文
 
 [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)
 
-### 4.2 代码
+### 5.2 代码
 
 [Generative Agents](https://github.com/joonspk-research/generative_agents)
 

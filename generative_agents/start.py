@@ -107,7 +107,7 @@ class SimulateServer:
         return utils.load_dict(os.path.join(self.static_root, path))
 
 
-# 从存档数据总载入配置，用于断点恢复
+# 从存档数据中载入配置，用于断点恢复
 def get_config_from_log(checkpoints_folder):
     files = sorted(os.listdir(checkpoints_folder))
 
