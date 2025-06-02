@@ -9,11 +9,15 @@ ${memory}
 
 ${previous_context}${current_context}
 ${agent} 开始和 ${another} 对话。以下是他们的对话记录：
-"""
+<对话记录>
 ${conversation}
-"""
+</对话记录>
 
-基于以上内容，现在 ${agent} 会对 ${another} 说什么？
+<对话原则>
+${agent} 不会重复<对话记录>中已有的内容
+</对话原则>
+
+基于以上<对话记录>和<对话原则>，现在 ${agent} 会对 ${another} 说什么？
 直接输出以下格式的json，不要补充其他信息：
 {
     "${agent}": <${agent}说的话>
