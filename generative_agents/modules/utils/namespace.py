@@ -42,9 +42,3 @@ class GenerativeAgentsKey:
     GAME = "game"
     TIMER = "timer"
     MODELS = "models"
-
-
-class ModelType:
-    """Model Type"""
-
-    LLM = "llm"

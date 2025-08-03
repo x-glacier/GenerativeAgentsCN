@@ -10,11 +10,11 @@
             "diversity": 5
         },
         "think": {
-            "mode": "llm",
             "llm": {
-                "base_url": "http://127.0.0.1:11434/v1",
+                "provider": "ollama",
                 "model": "qwen3:8b-q4_K_M",
-                "embedding_model": "bge-m3:latest"
+                "base_url": "http://127.0.0.1:11434/v1",
+                "api_key": ""
             },
             "interval": 1000,
             "poignancy_max": 150
@@ -22,20 +22,12 @@
         "chat_iter": 4,
         "associate": {
             "embedding": {
-                "type": "ollama",
+                "provider": "ollama",
+                "model": "bge-m3:latest",
                 "base_url": "http://127.0.0.1:11434",
-                "model": "bge-m3:latest"
+                "api_key": ""
             },
             "retention": 8
         }
-    },
-    "api_keys": {
-        "OPENAI_API_KEY": "",
-        "QIANFAN_AK": "",
-        "QIANFAN_SK": "",
-        "SPARK_APPID": "",
-        "SPARK_API_SECRET": "",
-        "SPARK_API_KEY": "",
-        "ZHIPUAI_API_KEY": ""
     }
 }

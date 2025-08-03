@@ -47,7 +47,7 @@ class SimulateServer:
 
         # 创建游戏
         game = create_game(name, static_root, config, conversation, logger=self.logger)
-        game.reset_game(keys=config["api_keys"])
+        game.reset_game()
 
         self.game = get_game()
         self.tile_size = self.game.maze.tile_size
@@ -147,7 +147,6 @@ def get_config(start_time="20240213-09:30", stride=15, agents=None):
         "maze": {"path": os.path.join(assets_root, "maze.json")},
         "agent_base": agent_config,
         "agents": {},
-        "api_keys": json_data["api_keys"],
     }
     for a in agents:
         config["agents"][a] = {

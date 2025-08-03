@@ -85,9 +85,9 @@ class Agent:
     def __str__(self):
         return utils.dump_dict(self.abstract())
 
-    def reset(self, keys):
-        if self.think_config["mode"] == "llm" and not self._llm:
-            self._llm = create_llm_model(**self.think_config["llm"], keys=keys)
+    def reset(self):
+        if not self._llm:
+            self._llm = create_llm_model(self.think_config["llm"])
 
     def completion(self, func_hint, *args, **kwargs):
         assert hasattr(

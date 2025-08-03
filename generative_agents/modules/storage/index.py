@@ -7,25 +7,33 @@ from llama_index.core.indices.vector_store.retrievers import VectorIndexRetrieve
 from llama_index.core.schema import TextNode
 from llama_index import core as index_core
 from llama_index.embeddings.ollama import OllamaEmbedding
+from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core import Settings
+
 from modules import utils
 
 
 class LlamaIndex:
-    def __init__(self, embedding, path=None):
+    def __init__(self, embedding_config, path=None):
         self._config = {"max_nodes": 0}
-        if embedding["type"] == "hugging_face":
-            embed_model = HuggingFaceEmbedding(model_name=embedding["model"])
-        elif embedding["type"] == "ollama":
+        if embedding_config["provider"] == "hugging_face":
+            embed_model = HuggingFaceEmbedding(model_name=embedding_config["model"])
+        elif embedding_config["provider"] == "ollama":
             embed_model = OllamaEmbedding(
-                model_name=embedding["model"],
-                base_url=embedding["base_url"],
+                model_name=embedding_config["model"],
+                base_url=embedding_config["base_url"],
                 ollama_additional_kwargs={"mirostat": 0},
+            )
+        elif embedding_config["provider"] == "openai":
+            embed_model = OpenAIEmbedding(
+                model_name=embedding_config["model"],
+                api_base=embedding_config["base_url"],
+                api_key=embedding_config["api_key"],
             )
         else:
             raise NotImplementedError(
-                "embedding type {} is not supported".format(embedding["type"])
+                "embedding provider {} is not supported".format(embedding_config["provider"])
             )
 
         Settings.embed_model = embed_model
@@ -105,18 +113,17 @@ class LlamaIndex:
         node_ids=None,
         retriever_creator=None,
     ):
-        while True:
-            try:
-                retriever_creator = retriever_creator or VectorIndexRetriever
-                return retriever_creator(
-                    self._index,
-                    similarity_top_k=similarity_top_k,
-                    filters=filters,
-                    node_ids=node_ids,
-                ).retrieve(text)
-            except Exception as e:
-                print(f"LlamaIndex.retrieve() caused an error: {e}")
-                time.sleep(5)
+        try:
+            retriever_creator = retriever_creator or VectorIndexRetriever
+            return retriever_creator(
+                self._index,
+                similarity_top_k=similarity_top_k,
+                filters=filters,
+                node_ids=node_ids,
+            ).retrieve(text)
+        except Exception as e:
+            # print(f"LlamaIndex.retrieve() caused an error: {e}")
+            return []
 
     def query(
         self,

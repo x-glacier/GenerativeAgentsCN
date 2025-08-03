@@ -72,9 +72,9 @@ class Game:
     def load_static(self, path):
         return utils.load_dict(os.path.join(self.static_root, path))
 
-    def reset_game(self, keys):
+    def reset_game(self):
         for a_name, agent in self.agents.items():
-            agent.reset(keys)
+            agent.reset()
             title = "{}.reset".format(a_name)
             self.logger.info("\n{}\n{}\n".format(utils.split_line(title), agent))
 

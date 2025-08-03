@@ -134,8 +134,7 @@ class Associate:
         importance_weight=2,
         memory=None,
     ):
-        self._index_config = {"embedding": embedding, "path": path}
-        self._index = LlamaIndex(**self._index_config)
+        self._index = LlamaIndex(embedding, path)
         self.memory = memory or {"event": [], "thought": [], "chat": []}
         self.cleanup_index()
         self.retention = retention
