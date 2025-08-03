@@ -15,14 +15,14 @@ cd GenerativeAgentsCN
 
 Modify the configuration file `generative_agents/data/config.json`:
 1. By default, [Ollama](https://ollama.com/) is used to load local quantization models and OpenAI compatible APIs are provided. We need to first pull the quantization model and ensure that `base_url` and `model` are consistent with the actual configuration of Ollama.
-2. If you want to call other APIs, fill in the relevant keys in `api_keys` and modify `base_url` and `model` to the correct values.
+2. If you want to call other OpenAI compatible APIs, you need to change `provider` to `openai`, and modify `model`, `api_key` and `base_url` to the correct values.
 
 ### 1.3 install python dependencies
 
 Use a virtual environment, e.g. with anaconda3:
 
 ```
-conda create -n generative_agents_cn python=3.11
+conda create -n generative_agents_cn python=3.12
 conda activate generative_agents_cn
 ```
 

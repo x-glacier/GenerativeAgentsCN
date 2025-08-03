@@ -43,7 +43,7 @@ cd GenerativeAgentsCN
 
 修改配置文件 `generative_agents/data/config.json`:
 1. 默认使用[Ollama](https://ollama.com/)加载本地量化模型，并提供OpenAI兼容API。需要先拉取量化模型（参考[ollama.md](docs/ollama.md)），并确保`base_url`和`model`与Ollama中的配置一致。
-2. 如果希望调用其他厂商的API，需要在`api_keys`中填入对应的key，并根据API文档修改`base_url`和`model`。
+2. 如果希望调用其他OpenAI兼容API，需要将`provider`改为`openai`，并根据API文档修改`model`、`api_key`和`base_url`。
 
 ### 1.3 安装python依赖
 
