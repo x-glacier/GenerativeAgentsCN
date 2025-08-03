@@ -129,8 +129,8 @@ http://127.0.0.1:5000/?name=example&step=0&speed=2&zoom=0.6
 
 由于wounderland项目原作者没有提供maze.json的生成代码，所以想要创建新地图，有以下几种方案：
 
-1. 参考原始generative_agents项目中maze.py的逻辑，修改现有代码，以便兼容tield编辑器导出的json和csv数据文件；
-2. 参考现有的maze.json格式，编写代码用于合并tield编辑器导出的maze_meta_info.json、collision_maze.csv、sector_maze.csv等文件，为新地图生成maze.json。
+1. 参考原始generative_agents项目中maze.py的逻辑，修改现有代码，以便兼容tiled编辑器导出的json和csv数据文件；
+2. 参考现有的maze.json格式，编写代码用于合并tiled编辑器导出的maze_meta_info.json、collision_maze.csv、sector_maze.csv等文件，为新地图生成maze.json。
 3. `jiejieje`已为本项目开发了一款地图标注工具，项目地址：https://github.com/jiejieje/tiled_to_maze.json
 
 ## 5. 参考资料
