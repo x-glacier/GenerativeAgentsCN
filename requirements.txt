@@ -1,8 +1,6 @@
-openai
-qianfan
-zhipuai
-spark-ai-python
-llama-index
-llama-index-embeddings-huggingface
-llama-index-embeddings-ollama
-flask
+openai==1.98.0
+llama-index==0.13.0
+llama-index-embeddings-huggingface==0.6.0
+llama-index-embeddings-ollama==0.7.0
+llama-index-embeddings-openai==0.5.0
+Flask==3.1.1
