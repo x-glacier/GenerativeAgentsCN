@@ -11,9 +11,9 @@
         },
         "think": {
             "llm": {
-                "provider": "ollama",
-                "model": "qwen3:4b-instruct-2507-q4_K_M",
-                "base_url": "http://127.0.0.1:11434/v1",
+                "provider": "openai",
+                "model": "gpt-4.1-mini",
+                "base_url": "",
                 "api_key": ""
             },
             "interval": 1000,
@@ -22,9 +22,9 @@
         "chat_iter": 4,
         "associate": {
             "embedding": {
-                "provider": "ollama",
-                "model": "qwen3-embedding:0.6b-q8_0",
-                "base_url": "http://127.0.0.1:11434",
+                "provider": "openai",
+                "model": "text-embedding-3-small",
+                "base_url": "",
                 "api_key": ""
             },
             "retention": 8

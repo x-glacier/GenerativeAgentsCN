@@ -1,4 +1,3 @@
-'''
 import random
 import datetime
 import re
@@ -459,7 +458,7 @@ class Scratch:
             "my_emotion": ""
         }
         if my_emotion:
-            info["my_emotion"] = f'''You are currently feeling: Pleasure={my_emotion['pleasure']:.2f}, Arousal={my_emotion['arousal']:.2f}, Dominance={my_emotion['dominance']:.2f}. This should subtly influence your tone and response.'''
+            info["my_emotion"] = f"""You are currently feeling: Pleasure={my_emotion['pleasure']:.2f}, Arousal={my_emotion['arousal']:.2f}, Dominance={my_emotion['dominance']:.2f}. This should subtly influence your tone and response."""
 
         info["chats"] = self._format_chats(chats)
 
@@ -616,4 +615,5 @@ class Scratch:
 
         failsafe = (False, "")
         return Result(prompt, None, failsafe, reactResponse)
-'''
+
+__all__ = ['Scratch', 'Result']

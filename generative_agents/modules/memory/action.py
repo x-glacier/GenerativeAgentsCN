@@ -34,6 +34,22 @@ class Action:
     def __str__(self):
         return utils.dump_dict(self.abstract())
 
+    @property
+    def agent_event(self):
+        """返回代理事件"""
+        return self.event
+    
+    @property
+    def object_event(self):
+        """返回对象事件"""
+        return self.obj_event
+    
+    def is_awake(self):
+        """检查代理是否清醒（未睡觉）"""
+        if self.event and hasattr(self.event, 'action'):
+            return '睡觉' not in str(self.event.action)
+        return True
+    
     def finished(self):
         if not self.duration:
             return True

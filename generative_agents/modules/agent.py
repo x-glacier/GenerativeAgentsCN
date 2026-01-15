@@ -8,9 +8,9 @@ import datetime
 from modules import memory, prompt, utils
 from modules.model.llm_model import create_llm_model
 from modules.memory.associate import Concept
-from generative_agents.modules.mind_adapter import AgentMindAdapter
-from generative_agents.modules.observers.gods_eye_system import get_gods_eye_system
-from generative_agents.modules.relationship_manager import RelationshipManager
+from modules.mind_adapter import AgentMindAdapter
+from modules.observers.gods_eye_system import get_gods_eye_system
+from modules.relationship_manager import RelationshipManager
 
 
 class Agent:
@@ -77,6 +77,10 @@ class Agent:
         self.move(config["coord"], config.get("path"))
         if self.coord is None:
             self.coord = config["coord"]
+
+    def llm_available(self):
+        """检查 LLM 是否可用"""
+        return self._llm is not None
 
     def abstract(self):
         des = {
