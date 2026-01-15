@@ -1,150 +1,107 @@
+# 青石镇：一个深度中国化的生成式智能体模拟世界
+
 简体中文 | [English](./README_en.md)
 
-# 生成式智能体（Generative Agents）深度汉化版
+**青石镇** 是一个基于斯坦福大学和谷歌开源的 [Generative Agents](https://arxiv.org/abs/2304.03442) 项目的深度中国化版本。我们对原项目进行了全面的重构和文化本地化，将一个西方的虚拟小镇转变为一个充满中国文化气息的模拟世界。在这里，25 位由大型语言模型（LLM）驱动的 AI 智能体拥有了全新的中国化身份、情感、记忆和人际关系，在一个名为“青石镇”的虚拟环境中生活、工作和互动。
 
-斯坦福AI小镇由斯坦福大学和谷歌于2023年8月开源，由25个智能体组成的虚拟世界，模拟了真实的人类生活。
+这个项目不仅是对 Generative Agents 的简单汉化，更是一次深入的文化移植和技术增强。我们引入了 **memos-mind** 情感记忆系统，赋予了每个智能体更丰富的内心世界和更真实的行为模式。
 
-25个智能体完全由ChatGPT驱动，自主组织派对、参加会议、在情人节筹办各种活动。他们能够展现出与人类相似的生活模式和行为习惯。
+![青石镇全景](docs/resources/qingshi_town_overview.png)
+*（上图为青石镇的概念图，展示了茶馆、公园、市集等核心场景）*
 
-Generative Agents的原始代码工程化程度较低，难以持续维护或拓展功能，且时隔两年，中文LLM的能力早已胜任此类任务。因此，我们对原项目进行了重构+深度汉化，旨在为中文用户提供一个利于维护的基础版本，以便后续实验或尝试更多玩法。
+## 核心特性
 
-[wounderland](https://github.com/Archermmt/wounderland)项目是原[Generative Agents](https://github.com/joonspk-research/generative_agents)项目的重构版本，结构良好且代码质量远优于原版，因此本项目基于wounderland开发。
+- **深度文化本地化**：所有场景、角色、对话和行为模式都经过了精心的中国化设计，用“青石茶馆”取代了咖啡馆，用“柳树市集”取代了药店，让智能体的互动更符合中国文化语境。
+- **memos-mind 情感记忆系统**：集成了先进的情感与记忆模块，包括：
+  - **PAD 情感空间**：使用三维情感模型（Pleasure-Arousal-Dominance）来动态追踪每个智能体的情感状态。
+  - **情感记忆**：将事件与情感关联，形成长期记忆，影响未来的决策和行为。
+  - **上帝之眼**：通过 SQLite 数据库记录所有智能体的心理状态、互动和关系演化，为研究提供丰富的数据支持。
+- **动态关系演化**：智能体之间的关系不再是静态的，而是会根据互动和共同经历动态演化，形成亲情、友情、爱情等复杂的社交网络。
+- **中国文化维度**：在智能体的行为模型中融入了“面子”、“人情”、“集体主义”等中国特有的文化维度，使其行为更具真实感。
+- **完整的技术栈**：项目代码基于 [wounderland](https://github.com/Archermmt/wounderland) 进行了重构，并修复了多个 bug，支持使用本地 LLM（如 Ollama + Qwen）进行部署，大大降低了实验成本。
 
-更新：
+## 青石镇的世界
 
-- 2025.06.02
-    - 增加对`Qwen3`和`DeepSeek-R1`等新模型的支持（处理输出结果中的\<think\>标签）。
-- 2026.01.15
-    - 使用`pydantic`模型取代正则表达式解析。感谢[Findworth](https://github.com/Findworth)提交的PR。
-    - 默认语言模型改为`qwen3:4b-instruct-2507`，嵌入模型改为`qwen3-embedding:0.6b`，减少显存占用，提升推理速度。
+青石镇是一个典型的中国小镇，拥有茶馆、小酒馆、市集、公园、学校等丰富的场景。25 位智能体在这里生活，他们有各自的职业、家庭和社交圈。
 
-主要工作：
+### 主要场景
 
-- 重写全部提示语，将智能体的“母语”切换为中文，以便对接Qwen或GLM-4等中文模型；
-- 针对中文特点和Qwen2.5/3系列模型的能力，优化中文提示语及智能体之间的对话起止逻辑；
-- 所有提示语模板化，便于后期维护；
-- 修正原版的小问题（例如wounderland原版中智能体在入睡后便不再醒来）；
-- 增加对本地Ollama API的支持，同时将LlamaIndex embedding也接入Ollama，实现完全本地部署，降低实验成本。*Ollama安装及配置可参考[ollama.md](docs/ollama.md)*；
-- 增加“断点恢复”等特性；
-- 回放界面基于原Generative Agents前端代码精简，同时将智能体活动的时间线及对话内容保存至Markdown文档。
+| 原始场景 | 青石镇场景 | 描述 |
+| :--- | :--- | :--- |
+| Hobbs Cafe | 青石茶馆 | 居民们喝茶、聊天、交换信息的主要场所。 |
+| The Rose and Crown Pub | 桂花小酒馆 | 提供传统酒水和社交氛围的晚间娱乐场所。 |
+| Oak Hill College | 青石中学 | 镇上的中学，是年轻智能体学习和成长的地方。 |
+| Johnson Park | 青石公园 | 居民们晨练、下棋、跳广场舞的公共空间。 |
+| Willow Market and Pharmacy | 柳树市集 | 售卖新鲜食材、中药材和日常用品的传统集市。 |
 
-回放画面：
+### 角色示例
 
-![snapshot](docs/resources/snapshot.png)
+每个角色都拥有详细的背景故事、人格特质（Big Five）、价值观（Schwartz）和中国文化特质。
 
-*注：地图及人物名称也同步汉化，是为了避免LLM在遇到中英混杂的上下文时，切换到英文语境。*
+| 姓名 | 职业 | 简介 |
+| :--- | :--- | :--- |
+| 李建国 | 青石茶馆老板 | 一位沉稳、见多识广的退伍军人，喜欢在茶馆里观察社会百态。 |
+| 王浩 | 桂花小酒馆调酒师 | 一个充满激情和创造力的年轻人，梦想着调制出代表青石镇的鸡尾酒。 |
+| 张伟 | 青石中学历史老师 | 对历史充满热情，致力于将枯燥的知识变得生动有趣。 |
+| 苏晴 | 花店老板 | 一个热爱生活、对美有独特见解的年轻女性。 |
+| 马强 | 快递员 | 对小镇的每一条街道都了如指掌，是连接整个小镇信息和物流的纽带。 |
 
-## 1. 准备工作
+## 技术实现
 
-### 1.1 获取代码：
+我们对原项目进行了大量的技术改进和 bug 修复，主要包括：
 
+- **代码重构**：全面审查和重构了核心代码，提高了可读性和可维护性。
+- **Bug 修复**：解决了包括 `Event.describe`、`prompt_poignancy`、`utils.get_uuid`、`Concept.from_event` 和 `Associate.add_concept` 在内的多个关键 bug。
+- **本地化部署**：增加了对 Ollama 的支持，可以完全使用本地 LLM 和嵌入模型，无需依赖昂贵的 API。
+- **前端可视化**：保留并优化了前端回放功能，可以直观地观察智能体的活动轨迹和互动过程。
+
+## 如何开始
+
+### 1. 准备工作
+
+**获取代码**
+```bash
+git clone https://github.com/sxhfut/GenerativeAgentsCN-Mind.git
+cd GenerativeAgentsCN-Mind
 ```
-git clone https://github.com/x-glacier/GenerativeAgentsCN.git
-cd GenerativeAgentsCN
-```
 
-### 1.2 配置大语言模型（LLM）
-
-修改配置文件 `generative_agents/data/config.json`:
-1. 默认使用[Ollama](https://ollama.com/)加载本地量化模型，并提供OpenAI兼容API。需要先拉取量化模型（参考[ollama.md](docs/ollama.md)），并确保`base_url`和`model`与Ollama中的配置一致。
-2. 如果希望调用其他OpenAI兼容API，需要将`provider`改为`openai`，并根据API文档修改`model`、`api_key`和`base_url`。
-
-### 1.3 安装python依赖
-
-建议先使用anaconda3创建并激活虚拟环境：
-
-```
-conda create -n generative_agents_cn python=3.12
-conda activate generative_agents_cn
-```
-
-安装依赖：
-
-```
+**安装依赖**
+```bash
 pip install -r requirements.txt
 ```
 
-## 2. 运行虚拟小镇
+**配置 LLM**
 
-```
+修改 `generative_agents/data/config.json` 文件，配置您希望使用的语言模型。默认配置为使用 OpenAI API，您也可以修改为使用本地 Ollama。
+
+### 2. 运行模拟
+
+我们提供了一个专为青石镇优化的启动脚本 `start_qingshi.py`。
+
+```bash
 cd generative_agents
-python start.py --name sim-test --start "20250213-09:30" --step 10 --stride 10
+python3.11 start_qingshi.py --name qingshi-test --step 10
 ```
 
-参数说明:
-- `name` - 每次启动虚拟小镇，需要设定唯一的名称，用于事后回放。
-- `start` - 虚拟小镇的起始时间。
-- `resume` - 在运行结束或意外中断后，从上次的“断点”处，继续运行虚拟小镇。
-- `step` - 在迭代多少步之后停止运行。
-- `stride` - 每一步迭代在虚拟小镇中对应的时间（分钟）。假如设定`--stride 10`，虚拟小镇在迭代过程中的时间变化将会是 9:00，9:10，9:20 ...
+- `name`：为本次模拟设定一个唯一的名称。
+- `step`：模拟运行的步数。
 
-## 3. 回放
+### 3. 查看结果与回放
 
-### 3.1 生成回放数据
-
-```
-python compress.py --name sim-test
+**压缩数据**
+```bash
+python3.11 compress.py --name qingshi-test
 ```
 
-运行结束后将在`results/compressed/sim-test`目录下生成回放数据文件`movement.json`。同时还将生成`simulation.md`，以时间线方式呈现每个智能体的状态及对话内容。
-
-### 3.2 启动回放服务
-
-```
-python replay.py
+**启动回放服务器**
+```bash
+python3.11 replay.py
 ```
 
-通过浏览器打开回放页面（地址：`http://127.0.0.1:5000/?name=sim-test` ），可以看到虚拟小镇中的居民在各个时间段的活动。
+然后打开浏览器访问 `http://127.0.0.1:5000/?name=qingshi-test` 即可看到青石镇的可视化回放。
 
-*只能通过键盘方向键移动画面*
+## 贡献与致谢
 
-参数说明  
-- `name` - 启动虚拟小镇时设定的名称。
-- `step` - 回放的起始步数，0代表从第一帧开始回放，预设值为0。
-- `speed` - 回放速度（0-5），0最慢，5最快，预设值为2。
-- `zoom` - 画面缩放比例，预设值为0.8。
+本项目基于 [wounderland](https://github.com/Archermmt/wounderland) 和原始的 [Generative Agents](https://github.com/joonspk-research/generative_agents) 项目开发。感谢原作者的开创性工作。
 
-发布版本中内置了名为`example`的回放数据（由qwen2.5:32b-instruct-q4_K_M生成）。若希望以较快速度从头开始回放，画面缩放比例为0.6，则对应的url是：
-http://127.0.0.1:5000/?name=example&step=0&speed=2&zoom=0.6
-
-也可直接打开[simulation.md](generative_agents/results/compressed/example/simulation.md)，查看`example`中所有人物活动和对话信息。
-
-### 3.3 回放截图
-
-*画面中对话内容由qwen2.5:14b-instruct-q4_K_M生成*
-
-小镇全景
-
-![小镇全景](docs/resources/snapshot1.gif)
-
-公园
-
-![公园](docs/resources/snapshot2.gif)
-
-咖啡馆
-
-![咖啡馆](docs/resources/snapshot3.gif)
-
-教室
-
-![教室](docs/resources/snapshot4.gif)
-
-## 4. 修改地图
-
-由于wounderland项目原作者没有提供maze.json的生成代码，所以想要创建新地图，有以下几种方案：
-
-1. 参考原始generative_agents项目中maze.py的逻辑，修改现有代码，以便兼容tiled编辑器导出的json和csv数据文件；
-2. 参考现有的maze.json格式，编写代码用于合并tiled编辑器导出的maze_meta_info.json、collision_maze.csv、sector_maze.csv等文件，为新地图生成maze.json。
-3. `jiejieje`已为本项目开发了一款地图标注工具，项目地址：https://github.com/jiejieje/tiled_to_maze.json
-
-## 5. 参考资料
-
-### 5.1 论文
-
-[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)
-
-### 5.2 代码
-
-[Generative Agents](https://github.com/joonspk-research/generative_agents)
-
-[wounderland](https://github.com/Archermmt/wounderland)
+我们也欢迎社区的贡献，如果您有任何建议或发现了 bug，请随时提交 issue 或 pull request。
