@@ -1,0 +1,109 @@
+{
+  "town_name": "青石镇",
+  "town_name_en": "Qingshi Town",
+  "description": "一个位于江南水乡的现代化小镇，兼具传统风貌与现代生活气息。小桥流水，白墙黛瓦，石板小巷，是一个充满人情味的社区。",
+  
+  "locations": [
+    {
+      "id": "qingshi_teahouse",
+      "name": "青石茶馆",
+      "type": "social_hub",
+      "description": "李建国经营的茶馆，是小镇的社交中心。装修古朴，茶香四溢，是居民聊天、下棋、听评弹的好去处。",
+      "coordinates": {"x": 10, "y": 15},
+      "activities": ["喝茶", "聊天", "下棋", "听评弹", "获取信息"],
+      "atmosphere": "闲适、温馨、充满人情味",
+      "opening_hours": "09:00-21:00"
+    },
+    {
+      "id": "community_center",
+      "name": "社区活动中心",
+      "type": "public_facility",
+      "description": "王淑芬的主要活动场所，设施现代化。有广场舞场地、书法教室、健康讲座厅和居民议事室。",
+      "coordinates": {"x": 20, "y": 10},
+      "activities": ["广场舞", "书法班", "健康讲座", "居民议事", "社区活动"],
+      "atmosphere": "热闹、积极、充满活力",
+      "opening_hours": "06:00-22:00"
+    },
+    {
+      "id": "central_market",
+      "name": "中心菜市场",
+      "type": "market",
+      "description": "最具烟火气的地方，每天早晨最热闹。各种新鲜蔬菜、水果、肉类应有尽有，是邻里闲聊的重要场所。",
+      "coordinates": {"x": 15, "y": 5},
+      "activities": ["买菜", "讨价还价", "邻里闲聊", "了解新鲜事"],
+      "atmosphere": "热闹、嘈杂、充满生活气息",
+      "opening_hours": "06:00-12:00"
+    },
+    {
+      "id": "riverside_promenade",
+      "name": "河边长廊",
+      "type": "public_space",
+      "description": "风景优美的公共空间，沿着小河修建，有石凳和垂柳。适合散步、约会、独处和思考。",
+      "coordinates": {"x": 5, "y": 20},
+      "activities": ["散步", "约会", "钓鱼", "发呆", "欣赏风景"],
+      "atmosphere": "宁静、浪漫、适合独处",
+      "opening_hours": "全天开放"
+    },
+    {
+      "id": "health_center",
+      "name": "社区卫生服务站",
+      "type": "medical_facility",
+      "description": "陈静工作的地方，镇上唯一的医疗机构。设施齐全，提供基本医疗服务、健康咨询和体检。",
+      "coordinates": {"x": 25, "y": 15},
+      "activities": ["看病", "咨询", "体检", "健康教育", "取药"],
+      "atmosphere": "专业、安静、让人安心",
+      "opening_hours": "08:00-17:30"
+    },
+    {
+      "id": "residential_area",
+      "name": "居民区",
+      "type": "residential",
+      "description": "青石镇的主要居住区，有传统的白墙黛瓦建筑，也有现代化的小区。邻里关系密切。",
+      "coordinates": {"x": 12, "y": 25},
+      "activities": ["居住", "邻里交往", "家庭活动"],
+      "atmosphere": "温馨、安静、有归属感",
+      "opening_hours": "全天"
+    }
+  ],
+  
+  "cultural_events": [
+    {
+      "name": "早市",
+      "time": "每天 06:00-09:00",
+      "location": "中心菜市场",
+      "description": "最热闹的时段，居民们买菜、交流信息"
+    },
+    {
+      "name": "晨练",
+      "time": "每天 06:30-08:00",
+      "location": "社区活动中心、河边长廊",
+      "description": "广场舞、太极拳、慢跑"
+    },
+    {
+      "name": "下午茶时间",
+      "time": "每天 14:00-17:00",
+      "location": "青石茶馆",
+      "description": "最悠闲的时段，居民们喝茶聊天"
+    },
+    {
+      "name": "晚间广场舞",
+      "time": "每天 19:30-21:00",
+      "location": "社区活动中心",
+      "description": "王淑芬组织的广场舞活动"
+    },
+    {
+      "name": "周末集市",
+      "time": "每周六、日 08:00-16:00",
+      "location": "中心菜市场周边",
+      "description": "更大规模的集市，有各种小吃和手工艺品"
+    }
+  ],
+  
+  "social_norms": {
+    "greeting_customs": "见面打招呼，长辈先称呼，使用尊称",
+    "gift_giving": "逢年过节、红白喜事都要送礼，讲究礼尚往来",
+    "conflict_resolution": "避免公开冲突，倾向于私下解决或请德高望重的人调解",
+    "privacy": "邻里之间相对开放，但也有一定界限",
+    "helping_behavior": "邻里互助是常态，但也要注意分寸"
+  }
+}

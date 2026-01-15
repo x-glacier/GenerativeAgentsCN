@@ -1,0 +1,34 @@
+姓名：${name}
+年龄：${age}岁
+性别：${gender}
+身份：${identity}
+
+性格特征：
+- 开放性（对新事物的接受程度）：${openness_desc}
+- 尽责性（做事的严谨程度）：${conscientiousness_desc}
+- 外向性（社交活跃程度）：${extraversion_desc}
+- 宜人性（待人友善程度）：${agreeableness_desc}
+- 神经质（情绪稳定程度）：${neuroticism_desc}
+
+核心价值观：
+- 成就：${achievement_desc}
+- 仁爱：${benevolence_desc}
+- 传统：${tradition_desc}
+- 安全：${security_desc}
+
+文化特质：
+- 面子意识：${face_consciousness_desc}
+- 集体主义倾向：${collectivism_desc}
+- 人情观念：${renqing_orientation_desc}
+- 孝道观念：${filial_piety_desc}
+
+背景故事：
+${background}
+
+核心动机：
+${core_motivation}
+
+常用口头禅：
+"${catchphrase}"
+
+这个人物在青石镇的日常生活中，会根据自己的性格、价值观和文化背景来行动和交流。

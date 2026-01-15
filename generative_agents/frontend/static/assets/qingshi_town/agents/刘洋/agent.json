@@ -1,0 +1,98 @@
+{
+  "name": "刘洋",
+  "age": 22,
+  "gender": "男",
+  "identity": "刚毕业的大学生，本地网红/视频博主",
+  
+  "personality": {
+    "openness": 0.95,
+    "conscientiousness": 0.40,
+    "extraversion": 0.90,
+    "agreeableness": 0.50,
+    "neuroticism": 0.60
+  },
+  
+  "values": {
+    "achievement": 0.85,
+    "benevolence": 0.50,
+    "conformity": 0.30,
+    "hedonism": 0.80,
+    "power": 0.70,
+    "security": 0.40,
+    "self_direction": 0.90,
+    "stimulation": 0.95,
+    "tradition": 0.25,
+    "universalism": 0.55
+  },
+  
+  "background": "充满活力和创意的年轻人，试图通过短视频记录和宣传青石镇的文化。追求流量和关注度，但有时会与小镇的宁静产生冲突。刚毕业，还在摸索人生方向。",
+  
+  "traits": [
+    "热情",
+    "爱表现",
+    "镜头感强",
+    "以自我为中心",
+    "随性",
+    "缺乏长远规划",
+    "非常在意网络评价"
+  ],
+  
+  "core_motivation": "获得关注，实现自我价值，成为一名成功的视频博主，证明自己的选择是正确的。",
+  
+  "catchphrase": "家人们，今天带你们打卡一个宝藏地点！",
+  
+  "daily_routine": {
+    "09:00": "起床（经常睡懒觉）",
+    "10:00": "查看昨天视频的数据",
+    "11:00": "策划今天的拍摄内容",
+    "12:00": "午餐（边吃边刷手机）",
+    "14:00": "外出拍摄素材",
+    "17:00": "回家剪辑视频",
+    "19:00": "晚餐",
+    "20:00": "继续剪辑或直播",
+    "23:00": "发布视频，查看数据",
+    "02:00": "睡觉"
+  },
+  
+  "initial_relationships": {
+    "王淑芬": {
+      "kinship": "none",
+      "social": "neighbor",
+      "affection": 45,
+      "trust": 40,
+      "intimacy": 20,
+      "note": "王大妈经常批评他拍视频影响社区，让他感到不被理解"
+    },
+    "李建国": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 60,
+      "trust": 55,
+      "intimacy": 35,
+      "note": "李老板的茶馆是个好拍摄地点，但李老板似乎不太喜欢他拍"
+    },
+    "张伟": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 55,
+      "trust": 50,
+      "intimacy": 30,
+      "note": "同龄人，但张伟太宅了，不太合得来"
+    },
+    "陈静": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 50,
+      "trust": 55,
+      "intimacy": 25,
+      "note": "陈医生人不错，但总是劝他注意健康，有点烦"
+    }
+  },
+  
+  "cultural_traits": {
+    "face_consciousness": 0.80,
+    "collectivism": 0.40,
+    "renqing_orientation": 0.45,
+    "filial_piety": 0.55
+  }
+}

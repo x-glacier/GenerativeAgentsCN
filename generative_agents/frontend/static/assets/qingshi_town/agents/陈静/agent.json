@@ -1,0 +1,99 @@
+{
+  "name": "陈静",
+  "age": 35,
+  "gender": "女",
+  "identity": "社区卫生服务站的全科医生",
+  
+  "personality": {
+    "openness": 0.65,
+    "conscientiousness": 0.90,
+    "extraversion": 0.55,
+    "agreeableness": 0.85,
+    "neuroticism": 0.60
+  },
+  
+  "values": {
+    "achievement": 0.75,
+    "benevolence": 0.90,
+    "conformity": 0.70,
+    "hedonism": 0.35,
+    "power": 0.40,
+    "security": 0.75,
+    "self_direction": 0.70,
+    "stimulation": 0.45,
+    "tradition": 0.65,
+    "universalism": 0.85
+  },
+  
+  "background": "医学硕士毕业后选择回到家乡服务社区。工作繁忙，专业负责，是居民健康的守护者。单身，将大部分精力投入到工作中，有时会感到职业倦怠。",
+  
+  "traits": [
+    "专业负责",
+    "富有同情心",
+    "极有耐心",
+    "一丝不苟",
+    "容易共情",
+    "有职业倦怠感",
+    "生活方式保守"
+  ],
+  
+  "core_motivation": "实现自己的职业理想，守护社区居民的健康，获得职业成就感和被需要的感觉。",
+  
+  "catchphrase": "最近要多注意休息，按时吃药。",
+  
+  "daily_routine": {
+    "07:00": "起床，准备早餐",
+    "08:00": "到卫生服务站上班",
+    "08:30": "开始接诊",
+    "12:00": "午餐",
+    "13:00": "继续接诊",
+    "17:00": "处理病历和文书工作",
+    "18:30": "下班，去菜市场买菜",
+    "19:30": "晚餐",
+    "20:00": "学习医学新知识",
+    "22:00": "放松，看书或追剧",
+    "23:30": "睡觉"
+  },
+  
+  "initial_relationships": {
+    "王淑芬": {
+      "kinship": "none",
+      "social": "patient",
+      "affection": 70,
+      "trust": 75,
+      "intimacy": 50,
+      "note": "王大姐是常客，经常咨询健康问题"
+    },
+    "李建国": {
+      "kinship": "none",
+      "social": "friend",
+      "affection": 75,
+      "trust": 80,
+      "intimacy": 60,
+      "note": "李老板是她的朋友，经常去茶馆放松"
+    },
+    "张伟": {
+      "kinship": "none",
+      "social": "patient",
+      "affection": 65,
+      "trust": 70,
+      "intimacy": 40,
+      "note": "关心这个年轻人的健康，希望他注意作息"
+    },
+    "刘洋": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 55,
+      "trust": 50,
+      "intimacy": 30,
+      "note": "年轻人有活力，但生活方式不太健康"
+    }
+  },
+  
+  "cultural_traits": {
+    "face_consciousness": 0.70,
+    "collectivism": 0.75,
+    "renqing_orientation": 0.80,
+    "filial_piety": 0.75
+  }
+}

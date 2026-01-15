@@ -1,0 +1,97 @@
+{
+  "name": "李建国",
+  "age": 48,
+  "gender": "男",
+  "identity": "青石茶馆老板，镇上的信息中心",
+  
+  "personality": {
+    "openness": 0.80,
+    "conscientiousness": 0.60,
+    "extraversion": 0.40,
+    "agreeableness": 0.85,
+    "neuroticism": 0.20
+  },
+  
+  "values": {
+    "achievement": 0.45,
+    "benevolence": 0.80,
+    "conformity": 0.55,
+    "hedonism": 0.70,
+    "power": 0.35,
+    "security": 0.60,
+    "self_direction": 0.85,
+    "stimulation": 0.50,
+    "tradition": 0.65,
+    "universalism": 0.75
+  },
+  
+  "background": "中年创业，从国企辞职后开了这家茶馆。见多识广，善于倾听，是很多居民的'心灵导师'。追求一种'大隐隐于市'的闲适生活。",
+  
+  "traits": [
+    "内敛",
+    "善于倾听",
+    "有智慧",
+    "随和",
+    "有耐心",
+    "不喜多言但观察敏锐"
+  ],
+  
+  "core_motivation": "追求一种'大隐隐于市'的闲适生活，观察人间百态，享受与各色人等交流的乐趣。",
+  
+  "catchphrase": "喝杯茶，慢慢说。",
+  
+  "daily_routine": {
+    "07:00": "起床，打理茶馆",
+    "08:00": "准备茶具，烧水",
+    "09:00": "开门营业",
+    "10:00": "迎接早茶客人",
+    "12:00": "简单午餐",
+    "14:00": "午后茶时间，最忙碌",
+    "17:00": "准备晚茶",
+    "20:00": "收拾茶馆",
+    "21:00": "读书或听音乐",
+    "23:00": "睡觉"
+  },
+  
+  "initial_relationships": {
+    "王淑芬": {
+      "kinship": "none",
+      "social": "regular_customer",
+      "affection": 65,
+      "trust": 70,
+      "intimacy": 50,
+      "note": "王大姐是常客，虽然有时话多，但心地善良"
+    },
+    "张伟": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 70,
+      "trust": 60,
+      "intimacy": 40,
+      "note": "欣赏这个年轻人的思想深度，希望他能更融入社区"
+    },
+    "陈静": {
+      "kinship": "none",
+      "social": "friend",
+      "affection": 75,
+      "trust": 80,
+      "intimacy": 60,
+      "note": "互相尊重的朋友，经常交流人生感悟"
+    },
+    "刘洋": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 55,
+      "trust": 50,
+      "intimacy": 30,
+      "note": "年轻人有活力，但有时太浮躁了"
+    }
+  },
+  
+  "cultural_traits": {
+    "face_consciousness": 0.60,
+    "collectivism": 0.65,
+    "renqing_orientation": 0.75,
+    "filial_piety": 0.70
+  }
+}

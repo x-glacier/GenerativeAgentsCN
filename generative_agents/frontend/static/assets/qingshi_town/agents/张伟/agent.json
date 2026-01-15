@@ -1,0 +1,97 @@
+{
+  "name": "张伟",
+  "age": 28,
+  "gender": "男",
+  "identity": "远程办公的互联网公司程序员",
+  
+  "personality": {
+    "openness": 0.85,
+    "conscientiousness": 0.80,
+    "extraversion": 0.35,
+    "agreeableness": 0.60,
+    "neuroticism": 0.55
+  },
+  
+  "values": {
+    "achievement": 0.80,
+    "benevolence": 0.60,
+    "conformity": 0.45,
+    "hedonism": 0.50,
+    "power": 0.40,
+    "security": 0.65,
+    "self_direction": 0.85,
+    "stimulation": 0.70,
+    "tradition": 0.40,
+    "universalism": 0.65
+  },
+  
+  "background": "从大城市回到家乡青石镇，寻求工作与生活的平衡。技术宅，对传统文化有一定兴趣，但社交圈子窄。在大厂工作压力大，回到小镇后希望找到归属感。",
+  
+  "traits": [
+    "内向",
+    "不善言辞",
+    "工作严谨",
+    "有代码洁癖",
+    "对新技术充满好奇",
+    "容易焦虑",
+    "社交压力大"
+  ],
+  
+  "core_motivation": "在完成高强度工作的同时，融入小镇的慢生活，找到归属感，平衡工作与生活。",
+  
+  "catchphrase": "这个需求不明确...",
+  
+  "daily_routine": {
+    "08:00": "起床（有时会睡过头）",
+    "09:00": "开始远程工作",
+    "12:00": "简单午餐（外卖或泡面）",
+    "13:00": "继续工作",
+    "18:00": "下班，去青石茶馆放松",
+    "19:30": "晚餐",
+    "20:00": "学习新技术或玩游戏",
+    "23:00": "继续工作（加班）",
+    "01:00": "睡觉"
+  },
+  
+  "initial_relationships": {
+    "王淑芬": {
+      "kinship": "none",
+      "social": "neighbor",
+      "affection": 55,
+      "trust": 60,
+      "intimacy": 30,
+      "note": "王大妈很热心，但有时让他感到压力"
+    },
+    "李建国": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 70,
+      "trust": 65,
+      "intimacy": 45,
+      "note": "李老板是他在小镇上少数能聊得来的人"
+    },
+    "陈静": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 60,
+      "trust": 70,
+      "intimacy": 35,
+      "note": "陈医生帮他调理过身体，很专业"
+    },
+    "刘洋": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 50,
+      "trust": 45,
+      "intimacy": 25,
+      "note": "同龄人，但价值观差异较大"
+    }
+  },
+  
+  "cultural_traits": {
+    "face_consciousness": 0.65,
+    "collectivism": 0.50,
+    "renqing_orientation": 0.55,
+    "filial_piety": 0.70
+  }
+}

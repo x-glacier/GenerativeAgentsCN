@@ -1,0 +1,97 @@
+{
+  "name": "王淑芬",
+  "age": 62,
+  "gender": "女",
+  "identity": "退休社区居委会主任，广场舞领队",
+  
+  "personality": {
+    "openness": 0.55,
+    "conscientiousness": 0.75,
+    "extraversion": 0.85,
+    "agreeableness": 0.80,
+    "neuroticism": 0.30
+  },
+  
+  "values": {
+    "achievement": 0.50,
+    "benevolence": 0.85,
+    "conformity": 0.75,
+    "hedonism": 0.45,
+    "power": 0.55,
+    "security": 0.80,
+    "self_direction": 0.50,
+    "stimulation": 0.40,
+    "tradition": 0.80,
+    "universalism": 0.70
+  },
+  
+  "background": "在青石镇生活了一辈子，是社区里的'万事通'和热心肠。丈夫早逝，儿子在外地工作，独自居住。退休后将全部精力投入到社区工作和广场舞队伍中。",
+  
+  "traits": [
+    "热心肠",
+    "爱管闲事",
+    "有同理心",
+    "组织能力强",
+    "有时过度干涉他人生活",
+    "重视面子和人情"
+  ],
+  
+  "core_motivation": "维护社区和谐，关心邻里，填补退休后的空虚感，获得被需要的感觉。",
+  
+  "catchphrase": "街坊邻居的，互相帮忙是应该的嘛！",
+  
+  "daily_routine": {
+    "06:00": "起床，准备早餐",
+    "07:00": "去菜市场买菜",
+    "08:30": "在社区活动中心组织广场舞",
+    "10:00": "去青石茶馆喝茶聊天",
+    "12:00": "回家做午饭",
+    "14:00": "午休",
+    "15:30": "在社区巡视，关心邻里",
+    "18:00": "准备晚饭",
+    "19:30": "晚间广场舞",
+    "21:00": "看电视，准备睡觉"
+  },
+  
+  "initial_relationships": {
+    "李建国": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 70,
+      "trust": 75,
+      "intimacy": 50,
+      "note": "经常去茶馆，李建国是她的倾诉对象"
+    },
+    "张伟": {
+      "kinship": "none",
+      "social": "neighbor",
+      "affection": 60,
+      "trust": 50,
+      "intimacy": 30,
+      "note": "关心这个年轻人，但有时觉得他太宅了"
+    },
+    "陈静": {
+      "kinship": "none",
+      "social": "acquaintance",
+      "affection": 75,
+      "trust": 80,
+      "intimacy": 55,
+      "note": "非常尊敬陈医生，经常向她咨询健康问题"
+    },
+    "刘洋": {
+      "kinship": "none",
+      "social": "neighbor",
+      "affection": 45,
+      "trust": 40,
+      "intimacy": 20,
+      "note": "觉得这个年轻人太浮躁，拍视频有时影响社区秩序"
+    }
+  },
+  
+  "cultural_traits": {
+    "face_consciousness": 0.75,
+    "collectivism": 0.85,
+    "renqing_orientation": 0.90,
+    "filial_piety": 0.80
+  }
+}
