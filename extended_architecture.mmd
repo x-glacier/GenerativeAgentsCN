@@ -1,0 +1,51 @@
+graph TB
+    subgraph "智能体核心 Agent"
+        A[Agent 主体]
+        P[Personality<br/>性格系统]
+        E[Emotion<br/>情绪状态]
+        T[TheoryOfMind<br/>心智理论]
+        M[Memory<br/>记忆系统]
+        S[Schedule<br/>日程规划]
+    end
+    
+    subgraph "环境与交互"
+        G[Game 游戏循环]
+        EM[EventManager<br/>全局事件管理器]
+        MZ[Maze 地图]
+        C[Conversation 对话系统]
+    end
+    
+    subgraph "数据驱动"
+        RD[真实情感数据<br/>38人3年]
+        CAL[Calibrator<br/>校准器]
+    end
+    
+    A -->|拥有| P
+    A -->|拥有| E
+    A -->|拥有| T
+    A -->|拥有| M
+    A -->|拥有| S
+    
+    P -->|调节| E
+    E -->|标记| M
+    T -->|推断他人| E
+    
+    G -->|管理| A
+    G -->|更新| EM
+    G -->|维护| MZ
+    
+    EM -->|注入事件| MZ
+    MZ -->|感知| A
+    
+    A -->|对话| C
+    C -->|情绪传染| E
+    
+    RD -->|提供特征| CAL
+    CAL -->|校准参数| P
+    CAL -->|校准参数| E
+    
+    style A fill:#e1f5ff
+    style E fill:#ffe1e1
+    style T fill:#fff4e1
+    style EM fill:#e1ffe1
+    style RD fill:#f0e1ff

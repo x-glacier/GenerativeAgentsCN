@@ -1,0 +1,63 @@
+graph TD
+    subgraph "User Interface"
+        A["start.py"] -- "启动/恢复" --> B("SimulateServer")
+        C["compress.py"] -- "生成回放" --> D("Replay Data")
+        E["replay.py"] -- "读取回放" --> F("Web Frontend")
+    end
+
+    subgraph "Simulation Core"
+        B -- "创建/管理" --> G("Game")
+        G -- "管理" --> H{"Agents"}
+        G -- "管理" --> I("Maze")
+        G -- "记录" --> J("Conversation Log")
+    end
+
+    subgraph "Agent Cognitive Architecture"
+        H -- "agent.think()" --> K("Decision Loop")
+        K -- "感知" --> L("Perception")
+        K -- "规划" --> M("Planning")
+        K -- "反思" --> N("Reflection")
+        K -- "行动" --> O("Action")
+    end
+
+    subgraph "Agent Memory"
+        P("Memory Modules") -- "关联记忆" --> Q("Associate Memory / LlamaIndex")
+        P -- "空间记忆" --> I
+        P -- "日程表" --> R("Schedule")
+        P -- "事件/动作" --> S("Event / Action")
+        L -- "存储感知" --> Q
+        M -- "读取记忆" --> Q
+        N -- "综合记忆" --> Q
+    end
+
+    subgraph "LLM Interaction"
+        T("LLM Model") -- "Ollama/OpenAI" --> U("External LLM API")
+        V("Prompt Engine") -- "生成提示" --> T
+        W("Prompt Templates") -- "定义模板" --> V
+        K -- "调用LLM" --> V
+    end
+
+    subgraph "Data & Configuration"
+        X("config.json") -- "LLM/Embedding配置" --> T
+        Y("agent.json") -- "智能体人设/初始状态" --> H
+        Z("maze.json") -- "地图数据" --> I
+        J -- "存储" --> AA("Checkpoint Files")
+        D -- "生成自" --> AA
+    end
+
+    H -- "包含" --> P
+    H -- "依赖" --> V
+
+    classDef user fill:#cde4ff,stroke:#5a96e6,stroke-width:2px
+    classDef core fill:#d5e8d4,stroke:#82b366,stroke-width:2px
+    classDef agent fill:#ffe6cc,stroke:#d79b00,stroke-width:2px
+    classDef memory fill:#f8cecc,stroke:#b85450,stroke-width:2px
+    classDef llm fill:#e1d5e7,stroke:#9673a6,stroke-width:2px
+    classDef data fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px
+
+    class A,C,E,F user
+    class B,G,H,I,J core
+    class K,L,M,N,O agent
+    class P,Q,R,S memory
+    class T,U,V,W llm
+    class X,Y,Z,AA,D data

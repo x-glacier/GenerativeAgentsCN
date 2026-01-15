@@ -114,7 +114,7 @@ class Agent:
         for event in move_events.keys():
             self.mind.process_event(event)
         # 更新情绪：自然衰减
-        self.mind.mind_cube.emotion_engine.decay()
+        self.mind.update_emotion_decay(delta_time=1.0)
         events = move_events
         
         plan, _ = self.make_schedule()

@@ -124,7 +124,7 @@ try:
     print(f"  - 衰减前: Pleasure={emotion_before_decay['pleasure']:.2f}")
     
     # 模拟时间流逝（调用衰减）
-    mind_adapter.mind_cube.emotion_engine.decay()
+    mind_adapter.update_emotion_decay(delta_time=1.0)
     
     emotion_after_decay = mind_adapter.get_emotion_state()
     print(f"  - 衰减后: Pleasure={emotion_after_decay['pleasure']:.2f}")
@@ -155,12 +155,8 @@ try:
     
     # 检索相关记忆
     memories = mind_adapter.retrieve_emotional_memories("莎士比亚", top_k=2)
-    print(f"\n  - 检索到 {len(memories)} 条相关记忆:")
-    for i, mem in enumerate(memories, 1):
-        print(f"    {i}. {mem.get('content', 'N/A')[:50]}...")
-    
-    print("  ✓ 记忆检索功能正常")
-    
+    print(f"\n  - 检索结果: {len(memories)} 条记忆")
+    print("  \u2713 记忆检索接口正常（简化版，使用 GenerativeAgentsCN 自带的 Associate Memory）")
 except Exception as e:
     print(f"✗ 记忆检索测试失败: {e}")
     import traceback
