@@ -1,0 +1,30 @@
+graph TD
+    subgraph GenerativeAgentsCN
+        A[Agent A] --> B(Agent B)
+        B --> A
+    end
+
+    subgraph GodsEyeSystem
+        C[Mind State Logger] --> D{Evolution Database}
+        E[Relationship Logger] --> D
+        F[Interaction Logger] --> D
+        G[GodsEyeSystem API] --> D
+    end
+
+    A -- "log_mind_state()" --> C
+    B -- "log_mind_state()" --> C
+    A -- "log_interaction()" --> F
+    B -- "log_interaction()" --> F
+    A -- "log_relationship()" --> E
+    B -- "log_relationship()" --> E
+
+    H[Researcher/User] --> G
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+    style F fill:#bbf,stroke:#333,stroke-width:2px
+    style D fill:#9f9,stroke:#333,stroke-width:2px
+    style G fill:#9f9,stroke:#333,stroke-width:2px
+    style H fill:#ff9,stroke:#333,stroke-width:2px

@@ -10,6 +10,7 @@ class Event:
         address=None,
         describe=None,
         emoji=None,
+        emotion=None,  # 新增：说话者的情绪状态
     ):
         self.subject = subject
         # self.predicate = predicate or "is"
@@ -19,6 +20,7 @@ class Event:
         self._describe = describe or ""
         self.address = address or []
         self.emoji = emoji or ""
+        self.emotion = emotion or {}  # 存储说话者的情绪（pleasure, arousal, dominance）
 
     def __str__(self):
         if self._describe:
@@ -74,6 +76,7 @@ class Event:
             "describe": self._describe,
             "address": self.address,
             "emoji": self.emoji,
+            "emotion": self.emotion,  # 新增：包含情绪信息
         }
 
     def get_describe(self, with_subject=True):

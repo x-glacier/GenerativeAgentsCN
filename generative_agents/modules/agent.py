@@ -9,6 +9,8 @@ from modules import memory, prompt, utils
 from modules.model.llm_model import create_llm_model
 from modules.memory.associate import Concept
 from generative_agents.modules.mind_adapter import AgentMindAdapter
+from generative_agents.modules.observers.gods_eye_system import get_gods_eye_system
+from generative_agents.modules.relationship_manager import RelationshipManager
 
 
 class Agent:
@@ -24,6 +26,14 @@ class Agent:
         os.makedirs(db_dir, exist_ok=True)
         db_file = os.path.join(db_dir, f"{self.name}.db")
         self.mind = AgentMindAdapter(self.name, config, db_path=db_file)
+        
+        # 初始化上帝视角系统（全局单例）
+        gods_eye_db = os.path.join(config["storage_root"], "evolution.db")
+        self.gods_eye = get_gods_eye_system(db_path=gods_eye_db, enable_db=True)
+        
+        # 初始化关系管理器
+        rel_config_path = os.path.join(config["storage_root"], f"{self.name}_relationships.json")
+        self.relationships = RelationshipManager(self.name, rel_config_path if os.path.exists(rel_config_path) else None)
 
         # agent config
         self.percept_config = config["percept"]
@@ -161,6 +171,18 @@ class Agent:
             "path": self.find_path(agents),
             "emojis": emojis,
         }
+        
+        # 记录心智状态到上帝视角系统
+        emotion = self.mind.get_emotion_state()
+        personality = self.mind.get_personality()
+        self.gods_eye.log_mind_state(
+            agent_name=self.name,
+            emotion=emotion,
+            personality=personality,
+            current_activity=self.scratch.currently,
+            location=str(self.coord)
+        )
+        
         return self.plan
 
     def move(self, coord, path=None):
@@ -330,14 +352,15 @@ class Agent:
         if self.action.finished():
             self.action = self._determine_action()
 
-    def make_event(self, subject, describe, address):
+    def make_event(self, subject, describe, address, emotion=None):
         e_describe = describe.replace("(", "").replace(")", "").replace("<", "").replace(">", "")
         if e_describe.startswith(subject + "此时"):
             e_describe = e_describe[len(subject + "此时"):]
         if e_describe.startswith(subject):
             e_describe = e_describe[len(subject):]
         event = memory.Event(
-            subject, "此时", e_describe, describe=describe, address=address
+            subject, "此时", e_describe, describe=describe, address=address,
+            emotion=emotion  # 支持传入情绪信息
         )
         return event
 
@@ -426,10 +449,63 @@ class Agent:
     def is_awake(self):
         return self.action.is_awake()
 
-    def add_chat(self, name, text):
-        event = self.make_event(name, text, self.get_tile().get_address())
+    def add_chat(self, name, text, speaker_emotion=None):
+        # 创建事件时附带说话者的情绪
+        event = self.make_event(name, text, self.get_tile().get_address(), emotion=speaker_emotion)
+        # 关键修复：让心智模块处理收到的消息，产生情感反应
+        # 上下文中包含对方的情绪状态
+        context = f"收到 {name} 的消息"
+        if speaker_emotion:
+            context += f"，{name} 的情绪状态：Pleasure={speaker_emotion.get('pleasure', 0):.2f}, Arousal={speaker_emotion.get('arousal', 0):.2f}"
+        # 获取自己处理前后的情绪状态
+        my_emotion_before = self.mind.get_emotion_state()
+        self.mind.process_event(event, context=context)
+        my_emotion_after = self.mind.get_emotion_state()
+        
         self._add_concept("chat", event)
         self.chats.append((name, text))
+        
+        # 记录交互到上帝视角系统
+        self.gods_eye.log_interaction(
+            interaction_type="dialogue",
+            speaker=name,
+            listener=self.name,
+            content=text,
+            speaker_state={
+                "real_emotion": speaker_emotion or {},
+                "activity": ""
+            },
+            listener_state={
+                "perceived_emotion": speaker_emotion or {},
+                "my_emotion_before": my_emotion_before,
+                "my_emotion_after": my_emotion_after
+            },
+            location=str(self.coord)
+        )
+        
+        # 更新关系
+        emotion_change = my_emotion_after.get('pleasure', 0) - my_emotion_before.get('pleasure', 0)
+        interaction_positive = emotion_change > 0
+        rel_changes = self.relationships.update_relationship(
+            other_name=name,
+            interaction_positive=interaction_positive,
+            interaction_intensity=abs(emotion_change) if emotion_change != 0 else 0.5
+        )
+        
+        # 记录关系变化
+        rel = self.relationships.get_relationship(name)
+        self.gods_eye.log_relationship(
+            agent_a=self.name,
+            agent_b=name,
+            a_to_b={
+                "affection": rel.affection,
+                "trust": rel.trust,
+                "intimacy": rel.intimacy,
+                "impression": rel.overall_impression
+            },
+            kinship=rel.kinship,
+            social=rel.social
+        )
 
     def _add_concept(self, node_type, event, poignancy=None, filling=None, expire=None):
         if poignancy is None:
@@ -514,13 +590,18 @@ class Agent:
                 )
                 if "<END OF CHAT>" in text:
                     break
-                event = self.make_event(self.name, text, self.get_tile().get_address())
+                # 创建事件时附带自己的情绪状态
+                event = self.make_event(
+                    self.name, text, self.get_tile().get_address(),
+                    emotion=my_emotion  # 附带情绪信息
+                )
                 # 让心智模块也处理这次对话事件
                 self.mind.process_event(event)
                 self._add_concept("chat", event)
                 self.chats.append((self.name, text))
                 chats.append((self.name, text))
-                other.add_chat(self.name, text)
+                # 关键：将自己的情绪传递给对方
+                other.add_chat(self.name, text, speaker_emotion=my_emotion)
         return
 
     def get_path(self):
