@@ -513,16 +513,32 @@ class Agent:
 
     def _add_concept(self, node_type, event, poignancy=None, filling=None, expire=None):
         if poignancy is None:
-            poignancy = self.completion("poignancy", event.describe)
+            # 根据 node_type 选择正确的 poignancy 方法
+            if node_type == "chat":
+                poignancy = self.completion("poignancy_chat", event)
+            else:  # event or thought
+                poignancy = self.completion("poignancy_event", event)
+        # 使用 hashlib 生成唯一 ID
+        import hashlib
+        node_id = hashlib.md5(event.get_describe().encode('utf-8')).hexdigest()[:16]
         node = Concept.from_event(
-            utils.get_uuid(event.get_describe()),
+            node_id,
             node_type,
             event,
-            poignancy=poignancy,
-            filling=filling,
-            expire=expire,
+            poignancy=poignancy
         )
-        self.associate.add_concept(node)
+        # 手动设置 expire 和 filling
+        if expire:
+            node.expire = expire
+        if filling:
+            node.filling = filling
+        self.associate.add_node(
+            node.node_type,
+            node.event,
+            node.poignancy,
+            create=node.create,
+            expire=node.expire,
+        )
         return node
 
     def _determine_action(self):
