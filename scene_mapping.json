@@ -1,0 +1,196 @@
+{
+  "mapping_description": "青石镇场景映射 - 将原始西方场景深度本地化为中国文化场景，保持坐标和结构不变",
+  "world_name": {
+    "original": "the Ville",
+    "chinese": "青石镇",
+    "description": "一个融合传统与现代的江南小镇"
+  },
+  "locations": {
+    "霍布斯咖啡馆": {
+      "original": "Hobbs Cafe",
+      "chinese": "青石茶馆",
+      "type": "公共社交场所",
+      "cultural_context": "传统茶馆是中国社区的社交中心，人们在此品茶、聊天、下棋",
+      "owner": "李建国",
+      "description": "镇上最受欢迎的茶馆，老板李建国是退伍军人，茶馆是观察社会百态的窗口"
+    },
+    "玫瑰酒吧": {
+      "original": "The Rose and Crown Pub",
+      "chinese": "桂花小酒馆",
+      "type": "休闲娱乐场所",
+      "cultural_context": "中国传统小酒馆，提供黄酒、米酒等传统酒类，是邻里聚会的场所",
+      "owner": "陈美玲",
+      "description": "温馨的小酒馆，老板娘陈美玲擅长烹饪家常菜，是镇上居民放松的好去处"
+    },
+    "柳树市场和药店": {
+      "original": "Willow Market and Pharmacy",
+      "chinese": "柳树市集",
+      "type": "商业区",
+      "cultural_context": "传统集市，售卖新鲜食材、日用品和中药材",
+      "owner": "王晓芳",
+      "description": "镇上的主要市集，王晓芳经营药店和杂货铺，是镇民日常采购的地方"
+    },
+    "哈维奥克供应店": {
+      "original": "Hobbs Cafe",
+      "chinese": "张记五金店",
+      "type": "商业店铺",
+      "cultural_context": "传统五金店，售卖工具、建材、日用五金",
+      "owner": "张伟",
+      "description": "镇上唯一的五金店，张伟是个勤劳的商人，店里什么都有"
+    },
+    "约翰逊公园": {
+      "original": "Johnson Park",
+      "chinese": "青石公园",
+      "type": "公共休闲区",
+      "cultural_context": "社区公园，有凉亭、石桌石凳，是居民晨练、下棋、跳广场舞的场所",
+      "description": "镇中心的公园，早晨有人打太极，傍晚有人跳广场舞，是社区活动的中心"
+    },
+    "奥克山学院": {
+      "original": "Oak Hill College",
+      "chinese": "青石中学",
+      "type": "教育机构",
+      "cultural_context": "镇上的中学，提供初中和高中教育",
+      "description": "镇上唯一的中学，培养了几代青石镇的学子"
+    },
+    "奥克山学院宿舍": {
+      "original": "Oak Hill College Dorm",
+      "chinese": "青石中学宿舍",
+      "type": "学生宿舍",
+      "cultural_context": "学生住宿区",
+      "description": "为外地学生提供住宿的宿舍楼"
+    },
+    "艺术家共居空间": {
+      "original": "Artist Co-Living Space",
+      "chinese": "文艺工作室",
+      "type": "创作空间",
+      "cultural_context": "艺术家和文化工作者的共享工作室，体现现代文化创意产业",
+      "description": "几位年轻艺术家租下的老房子，改造成工作室和展示空间"
+    },
+    "摩尔家族的房子": {
+      "original": "The Moore Family House",
+      "chinese": "李家大院",
+      "type": "居民住宅",
+      "cultural_context": "传统家族住宅，体现中国家庭观念",
+      "owner": "李建国",
+      "description": "李建国的家，传统的江南民居风格"
+    },
+    "林氏家族的房子": {
+      "original": "The Lin Family House",
+      "chinese": "林家小院",
+      "type": "居民住宅",
+      "cultural_context": "家族住宅",
+      "owner": "林梅",
+      "description": "林梅和家人居住的小院，院子里种满了花草"
+    },
+    "莫雷诺家族的房子": {
+      "original": "The Moreno Family House",
+      "chinese": "陈家老宅",
+      "type": "居民住宅",
+      "cultural_context": "老式住宅",
+      "owner": "陈美玲",
+      "description": "陈美玲的祖宅，保留了传统建筑风格"
+    },
+    "塔玛拉和卡门的家": {
+      "original": "Tamara and Carmen's House",
+      "chinese": "王家小楼",
+      "type": "居民住宅",
+      "cultural_context": "现代住宅",
+      "owner": "王晓芳",
+      "description": "王晓芳和女儿居住的两层小楼"
+    },
+    "山本百合子的房子": {
+      "original": "Yuriko Yamamoto's House",
+      "chinese": "赵家别墅",
+      "type": "居民住宅",
+      "cultural_context": "较为宽敞的独立住宅",
+      "owner": "赵丽华",
+      "description": "赵丽华的家，装修精致，体现主人的品味"
+    },
+    "亚当的家": {
+      "original": "Adam's House",
+      "chinese": "刘家小院",
+      "type": "居民住宅",
+      "owner": "刘强",
+      "description": "刘强的住所，简朴实用"
+    },
+    "乔治的公寓": {
+      "original": "George's Apartment",
+      "chinese": "张伟公寓",
+      "type": "居民公寓",
+      "owner": "张伟",
+      "description": "张伟租住的公寓"
+    },
+    "亚瑟的公寓": {
+      "original": "Arthur's Apartment",
+      "chinese": "周杰公寓",
+      "type": "居民公寓",
+      "owner": "周杰",
+      "description": "周杰的单身公寓"
+    },
+    "伊莎贝拉的公寓": {
+      "original": "Isabella's Apartment",
+      "chinese": "吴晓雨公寓",
+      "type": "居民公寓",
+      "owner": "吴晓雨",
+      "description": "吴晓雨租住的公寓，温馨整洁"
+    },
+    "卡洛斯的公寓": {
+      "original": "Carlos's Apartment",
+      "chinese": "马强公寓",
+      "type": "居民公寓",
+      "owner": "马强",
+      "description": "马强的公寓，简单实用"
+    },
+    "瑞恩的公寓": {
+      "original": "Ryan's Apartment",
+      "chinese": "孙浩公寓",
+      "type": "居民公寓",
+      "owner": "孙浩",
+      "description": "孙浩的公寓，略显凌乱"
+    }
+  },
+  "room_types": {
+    "主人房": {
+      "original": "bedroom",
+      "cultural_note": "保持不变，符合中文习惯"
+    },
+    "浴室": {
+      "original": "bathroom",
+      "cultural_note": "保持不变"
+    },
+    "厨房": {
+      "original": "kitchen",
+      "cultural_note": "保持不变"
+    },
+    "公共休息室": {
+      "original": "common room",
+      "cultural_note": "保持不变"
+    },
+    "花园": {
+      "original": "garden",
+      "cultural_note": "保持不变"
+    },
+    "图书馆": {
+      "original": "library",
+      "cultural_note": "保持不变"
+    },
+    "教室": {
+      "original": "classroom",
+      "cultural_note": "保持不变"
+    },
+    "走廊": {
+      "original": "hallway",
+      "cultural_note": "保持不变"
+    },
+    "供应店": {
+      "original": "supply store",
+      "cultural_note": "保持不变"
+    }
+  },
+  "implementation_notes": {
+    "coordinate_preservation": "所有坐标保持不变，仅修改语义标签",
+    "cultural_authenticity": "场景名称体现中国文化特色，如茶馆代替咖啡馆，市集代替超市",
+    "character_alignment": "场景所有者与中国化角色配置文件对齐",
+    "frontend_compatibility": "确保前端可以正确显示中文场景名称"
+  }
+}
