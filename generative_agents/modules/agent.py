@@ -8,6 +8,7 @@ import datetime
 from modules import memory, prompt, utils
 from modules.model.llm_model import create_llm_model
 from modules.memory.associate import Concept
+from generative_agents.modules.mind_adapter import AgentMindAdapter
 
 
 class Agent:
@@ -17,6 +18,12 @@ class Agent:
         self.conversation = conversation
         self._llm = None
         self.logger = logger
+
+        # 初始化心智适配器（简化版）
+        db_dir = os.path.join(config["storage_root"], "mind_db")
+        os.makedirs(db_dir, exist_ok=True)
+        db_file = os.path.join(db_dir, f"{self.name}.db")
+        self.mind = AgentMindAdapter(self.name, config, db_path=db_file)
 
         # agent config
         self.percept_config = config["percept"]
@@ -71,15 +78,12 @@ class Agent:
             "chats": self.chats,
             "action": self.action.abstract(),
             "associate": self.associate.abstract(),
+            "emotion": self.mind.get_emotion_state() # 新增：暴露情绪状态
         }
         if self.schedule.scheduled():
             des["schedule"] = self.schedule.abstract()
         if self.llm_available():
             des["llm"] = self._llm.get_summary()
-        # if self.plan.get("path"):
-        #     des["path"] = "-".join(
-        #         ["{},{}".format(c[0], c[1]) for c in self.plan["path"]]
-        #     )
         return des
 
     def __str__(self):
@@ -105,7 +109,14 @@ class Agent:
         return output
 
     def think(self, status, agents):
-        events = self.move(status["coord"], status.get("path"))
+        move_events = self.move(status["coord"], status.get("path"))
+        # 更新情绪：处理移动产生的事件
+        for event in move_events.keys():
+            self.mind.process_event(event)
+        # 更新情绪：自然衰减
+        self.mind.mind_cube.emotion_engine.decay()
+        events = move_events
+        
         plan, _ = self.make_schedule()
 
         if (plan["describe"] == "sleeping" or "睡" in plan["describe"]) and self.is_awake():
@@ -127,7 +138,11 @@ class Agent:
                 start=utils.get_timer().daily_time(plan["start"]),
             )
         if self.is_awake():
-            self.percept()
+            observed_concepts = self.percept()
+            # 更新情绪：处理感知到的事件 (concept.event)
+            for concept in observed_concepts:
+                self.mind.process_event(concept.event)
+
             self.make_plan(agents)
             self.reflect()
         else:
@@ -204,7 +219,6 @@ class Agent:
             init_schedule = self.completion("schedule_init", wake_up)
             # make daily schedule
             hours = [f"{i}:00" for i in range(24)]
-            # seed = [(h, "sleeping") for h in hours[:wake_up]]
             seed = [(h, "睡觉") for h in hours[:wake_up]]
             seed += [(h, "") for h in hours[wake_up:]]
             schedule = {}
@@ -306,6 +320,7 @@ class Agent:
         self.logger.info(
             "{} percept {}/{} concepts".format(self.name, valid_num, len(self.concepts))
         )
+        return self.concepts
 
     def make_plan(self, agents):
         if self._reaction(agents):
@@ -315,13 +330,7 @@ class Agent:
         if self.action.finished():
             self.action = self._determine_action()
 
-    # create action && object events
     def make_event(self, subject, describe, address):
-        # emoji = self.completion("describe_emoji", describe)
-        # return self.completion(
-        #     "describe_event", subject, subject + describe, address, emoji
-        # )
-
         e_describe = describe.replace("(", "").replace(")", "").replace("<", "").replace(">", "")
         if e_describe.startswith(subject + "此时"):
             e_describe = e_describe[len(subject + "此时"):]
@@ -334,12 +343,6 @@ class Agent:
 
     def reflect(self):
         def _add_thought(thought, evidence=None):
-            # event = self.completion(
-            #     "describe_event",
-            #     self.name,
-            #     thought,
-            #     address=self.get_tile().get_address(),
-            # )
             event = self.make_event(self.name, thought, self.get_tile().get_address())
             return self._add_concept("thought", event, filling=evidence)
 
@@ -398,7 +401,6 @@ class Agent:
         if tuple(self.coord) in target_tiles:
             return []
 
-        # filter tile with self event
         def _ignore_target(t_coord):
             if list(t_coord) == list(self.coord):
                 return True
@@ -410,279 +412,119 @@ class Agent:
         target_tiles = [t for t in target_tiles if not _ignore_target(t)]
         if not target_tiles:
             return []
-        if len(target_tiles) >= 4:
-            target_tiles = random.sample(target_tiles, 4)
-        pathes = {t: self.maze.find_path(self.coord, t) for t in target_tiles}
-        target = min(pathes, key=lambda p: len(pathes[p]))
-        return pathes[target][1:]
+        paths = self.maze.find_path(self.coord, target_tiles)
+        if not paths:
+            return []
+        return list(paths[0])
+
+    def get_tile(self):
+        return self.maze.tile_at(self.coord)
+
+    def get_event(self, is_agent=True):
+        return self.action.agent_event if is_agent else self.action.object_event
+
+    def is_awake(self):
+        return self.action.is_awake()
+
+    def add_chat(self, name, text):
+        event = self.make_event(name, text, self.get_tile().get_address())
+        self._add_concept("chat", event)
+        self.chats.append((name, text))
+
+    def _add_concept(self, node_type, event, poignancy=None, filling=None, expire=None):
+        if poignancy is None:
+            poignancy = self.completion("poignancy", event.describe)
+        node = Concept.from_event(
+            utils.get_uuid(event.get_describe()),
+            node_type,
+            event,
+            poignancy=poignancy,
+            filling=filling,
+            expire=expire,
+        )
+        self.associate.add_concept(node)
+        return node
 
     def _determine_action(self):
-        self.logger.info("{} is determining action...".format(self.name))
-        plan, de_plan = self.schedule.current_plan()
-        describes = [plan["describe"], de_plan["describe"]]
-        address = self.spatial.find_address(describes[0], as_list=True)
-        if not address:
-            tile = self.get_tile()
-            kwargs = {
-                "describes": describes,
-                "spatial": self.spatial,
-                "address": tile.get_address("world", as_list=True),
-            }
-            kwargs["address"].append(
-                self.completion("determine_sector", **kwargs, tile=tile)
-            )
-            arenas = self.spatial.get_leaves(kwargs["address"])
-            if len(arenas) == 1:
-                kwargs["address"].append(arenas[0])
-            else:
-                kwargs["address"].append(self.completion("determine_arena", **kwargs))
-            objs = self.spatial.get_leaves(kwargs["address"])
-            if len(objs) == 1:
-                kwargs["address"].append(objs[0])
-            elif len(objs) > 1:
-                kwargs["address"].append(self.completion("determine_object", **kwargs))
-            address = kwargs["address"]
+        plan, idx = self.schedule.current_plan()
+        if idx < 0:
+            return None
+        if plan["describe"] == "sleeping" or "睡" in plan["describe"]:
+            return None
+        describe = plan["decompose"][idx]["describe"]
+        duration = plan["decompose"][idx]["duration"]
+        start = plan["decompose"][idx]["start"]
+        address = self.spatial.find_address(describe, as_list=True)
+        event = self.make_event(self.name, describe, address)
+        return memory.Action(event, start=start, duration=duration)
 
-        event = self.make_event(self.name, describes[-1], address)
-        obj_describe = self.completion("describe_object", address[-1], describes[-1])
-        obj_event = self.make_event(address[-1], obj_describe, address)
-
-        event.emoji = f"{de_plan['describe']}"
-
-        return memory.Action(
-            event,
-            obj_event,
-            duration=de_plan["duration"],
-            start=utils.get_timer().daily_time(de_plan["start"]),
-        )
-
-    def _reaction(self, agents=None, ignore_words=None):
-        focus = None
-        ignore_words = ignore_words or ["空闲"]
-
-        def _focus(concept):
-            return concept.event.subject in agents
-
-        def _ignore(concept):
-            return any(i in concept.describe for i in ignore_words)
-
-        if agents:
-            priority = [i for i in self.concepts if _focus(i)]
-            if priority:
-                focus = random.choice(priority)
-        if not focus:
-            priority = [i for i in self.concepts if not _ignore(i)]
-            if priority:
-                focus = random.choice(priority)
-        if not focus or focus.event.subject not in agents:
-            return
-        other, focus = agents[focus.event.subject], self.associate.get_relation(focus)
-
-        if self._chat_with(other, focus):
-            return True
-        if self._wait_other(other, focus):
-            return True
-        return False
+    def _reaction(self, agents):
+        if len(self.concepts) == 0:
+            return False
+        other = self.concepts[0].event.subject
+        if other not in agents:
+            return False
+        if self._skip_react(agents[other]):
+            return False
+        react = self.completion("react", agents[other], self.concepts)
+        if not react[0]:
+            return False
+        self.logger.info("{} react to {} -> {}".format(self.name, other, react[1]))
+        if react[1] == "chat" or react[1] == "对话":
+            self._chat_with(agents[other], self.concepts)
+        else:
+            address = self.spatial.find_address(react[1], as_list=True)
+            event = self.make_event(self.name, react[1], address)
+            self.revise_schedule(event, self.action.start, self.action.duration)
+        return True
 
     def _skip_react(self, other):
+        if not self.is_awake() or not other.is_awake():
+            return True
+        if self.get_event().fit(other.name, "对话") or other.get_event().fit(
+            self.name, "对话"
+        ):
+            return True
+
         def _skip(event):
-            if not event.address or "sleeping" in event.get_describe(False) or "睡觉" in event.get_describe(False):
+            if not event:
+                return False
+            if event.object == "idle" or event.object == "空闲":
                 return True
-            if event.predicate == "待开始":
+            if event.fit(self.name, "对话") or event.fit(other.name, "对话"):
                 return True
             return False
 
-        if utils.get_timer().daily_duration(mode="hour") >= 23:
-            return True
         if _skip(self.get_event()) or _skip(other.get_event()):
             return True
         return False
 
     def _chat_with(self, other, focus):
-        if len(self.schedule.daily_schedule) < 1 or len(other.schedule.daily_schedule) < 1:
-            # initializing
-            return False
-        if self._skip_react(other):
-            return False
-        if other.path:
-            return False
-        if self.get_event().fit(predicate="对话") or other.get_event().fit(predicate="对话"):
-            return False
+        # 获取自身当前情绪
+        my_emotion = self.mind.get_emotion_state()
 
-        chats = self.associate.retrieve_chats(other.name)
-        if chats:
-            delta = utils.get_timer().get_delta(chats[0].create)
-            self.logger.info(
-                "retrieved chat between {} and {}({} min):\n{}".format(
-                    self.name, other.name, delta, chats[0]
+        chats, relations = self.conversation.get_chats(self, other)
+        if relations:
+            self.logger.info("{} is chatting with {}...".format(self.name, other.name))
+            for i in range(self.chat_iter):
+                # 在提示词中加入自身情绪上下文
+                text = self.completion(
+                    "generate_chat", self, other, relations[0], chats,
+                    my_emotion=my_emotion
                 )
-            )
-            if delta < 60:
-                return False
-
-        if not self.completion("decide_chat", self, other, focus, chats):
-            return False
-
-        self.logger.info("{} decides chat with {}".format(self.name, other.name))
-        start, chats = utils.get_timer().get_date(), []
-        relations = [
-            self.completion("summarize_relation", self, other.name),
-            other.completion("summarize_relation", other, self.name),
-        ]
-
-        for i in range(self.chat_iter):
-            text = self.completion(
-                "generate_chat", self, other, relations[0], chats
-            )
-
-            if i > 0:
-                # 对于发起对话的Agent，从第2轮对话开始，检查是否出现“复读”现象
-                end = self.completion(
-                    "generate_chat_check_repeat", self, chats, text
-                )
-                if end:
+                if "<END OF CHAT>" in text:
                     break
-
-                # 对于发起对话的Agent，从第2轮对话开始，检查话题是否结束
+                event = self.make_event(self.name, text, self.get_tile().get_address())
+                # 让心智模块也处理这次对话事件
+                self.mind.process_event(event)
+                self._add_concept("chat", event)
+                self.chats.append((self.name, text))
                 chats.append((self.name, text))
-                end = self.completion(
-                    "decide_chat_terminate", self, other, chats
-                )
-                if end:
-                    break
-            else :
-                chats.append((self.name, text))
+                other.add_chat(self.name, text)
+        return
 
-            text = other.completion(
-                "generate_chat", other, self, relations[1], chats
-            )
-            if i > 0:
-                # 对于响应对话的Agent，从第2轮开始，检查是否出现“复读”现象
-                end = self.completion(
-                    "generate_chat_check_repeat", other, chats, text
-                )
-                if end:
-                    break
-
-            chats.append((other.name, text))
-
-            # 对于响应对话的Agent，从第1轮开始，检查话题是否结束
-            end = other.completion(
-                "decide_chat_terminate", other, self, chats
-            )
-            if end:
-                break
-
-        key = utils.get_timer().get_date("%Y%m%d-%H:%M")
-        if key not in self.conversation.keys():
-            self.conversation[key] = []
-        self.conversation[key].append({f"{self.name} -> {other.name} @ {'，'.join(self.get_event().address)}": chats})
-
-        self.logger.info(
-            "{} and {} has chats\n  {}".format(
-                self.name,
-                other.name,
-                "\n  ".join(["{}: {}".format(n, c) for n, c in chats]),
-            )
-        )
-        chat_summary = self.completion("summarize_chats", chats)
-        duration = int(sum([len(c[1]) for c in chats]) / 240)
-        self.schedule_chat(
-            chats, chat_summary, start, duration, other
-        )
-        other.schedule_chat(chats, chat_summary, start, duration, self)
-        return True
-
-    def _wait_other(self, other, focus):
-        if self._skip_react(other):
-            return False
+    def get_path(self):
         if not self.path:
-            return False
-        if self.get_event().address != other.get_tile().get_address():
-            return False
-        if not self.completion("decide_wait", self, other, focus):
-            return False
-        self.logger.info("{} decides wait to {}".format(self.name, other.name))
-        start = utils.get_timer().get_date()
-        # duration = other.action.end - start
-        t = other.action.end - start
-        duration = int(t.total_seconds() / 60)
-        event = memory.Event(
-            self.name,
-            "waiting to start",
-            self.get_event().get_describe(False),
-            # address=["<waiting>"] + self.get_event().address,
-            address=self.get_event().address,
-            emoji=f"⌛",
-        )
-        self.revise_schedule(event, start, duration)
-
-    def schedule_chat(self, chats, chats_summary, start, duration, other, address=None):
-        self.chats.extend(chats)
-        event = memory.Event(
-            self.name,
-            "对话",
-            other.name,
-            describe=chats_summary,
-            address=address or self.get_tile().get_address(),
-            emoji=f"💬",
-        )
-        self.revise_schedule(event, start, duration)
-
-    def _add_concept(
-        self,
-        e_type,
-        event,
-        create=None,
-        expire=None,
-        filling=None,
-    ):
-        if event.fit(None, "is", "idle"):
-            poignancy = 1
-        elif event.fit(None, "此时", "空闲"):
-            poignancy = 1
-        elif e_type == "chat":
-            poignancy = self.completion("poignancy_chat", event)
-        else:
-            poignancy = self.completion("poignancy_event", event)
-        self.logger.debug("{} add associate {}".format(self.name, event))
-        return self.associate.add_node(
-            e_type,
-            event,
-            poignancy,
-            create=create,
-            expire=expire,
-            filling=filling,
-        )
-
-    def get_tile(self):
-        return self.maze.tile_at(self.coord)
-
-    def get_event(self, as_act=True):
-        return self.action.event if as_act else self.action.obj_event
-
-    def is_awake(self):
-        if not self.action:
-            return True
-        if self.get_event().fit(self.name, "is", "sleeping"):
-            return False
-        if self.get_event().fit(self.name, "正在", "睡觉"):
-            return False
-        return True
-
-    def llm_available(self):
-        if not self._llm:
-            return False
-        return self._llm.is_available()
-
-    def to_dict(self, with_action=True):
-        info = {
-            "status": self.status,
-            "schedule": self.schedule.to_dict(),
-            "associate": self.associate.to_dict(),
-            "chats": self.chats,
-            "currently": self.scratch.currently,
-        }
-        if with_action:
-            info.update({"action": self.action.to_dict()})
-        return info
+            return []
+        path, self.path = [self.path[0]], self.path[1:]
+        return path

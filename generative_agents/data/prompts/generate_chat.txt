@@ -8,6 +8,9 @@ ${memory}
 当前时间：${current_time}
 
 ${previous_context}${current_context}
+
+${my_emotion}
+
 ${agent} 开始和 ${another} 对话。以下是他们的对话记录：
 <对话记录>
 ${conversation}
