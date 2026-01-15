@@ -101,10 +101,14 @@ class AgentMindAdapter:
 
     def get_emotion_state(self):
         """获取当前情绪状态（VAD 格式的字典）。"""
-        emotion_obj = self.mind_cube.get_emotional_state()
+        emotion_obj = self.mind_cube.emotion_engine.get_current_emotion()
         if emotion_obj:
-            return emotion_obj.to_dict()
-        return None
+            return {
+                'pleasure': emotion_obj.valence,
+                'arousal': emotion_obj.arousal,
+                'dominance': emotion_obj.dominance
+            }
+        return {'pleasure': 0.0, 'arousal': 0.0, 'dominance': 0.5}
 
     def retrieve_emotional_memories(self, query, top_k=5):
         """检索与查询相关的情感化记忆。"""

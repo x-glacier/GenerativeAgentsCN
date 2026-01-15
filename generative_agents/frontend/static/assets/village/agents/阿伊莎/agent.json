@@ -13,6 +13,20 @@
     "lifestyle": "阿伊莎晚上10点左右上床睡觉，早上6点左右醒来，下午5点左右吃晚饭。",
     "daily_plan": "阿伊莎从上午10点到下午2点去奥克山学院的图书馆上课，然后在图书馆学习。"
   },
+  "personality": {
+    "openness": 0.85,
+    "conscientiousness": 0.75,
+    "extraversion": 0.60,
+    "agreeableness": 0.80,
+    "neuroticism": 0.40
+  },
+  "values": {
+    "benevolence": 0.75,
+    "universalism": 0.80,
+    "self-direction": 0.85,
+    "achievement": 0.70,
+    "power": 0.30
+  },
   "spatial": {
     "address": {
       "living_area": [
